@@ -28,7 +28,7 @@
     }
 
     .container {
-      max-width: 1080px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 24px 16px 48px;
     }
@@ -53,7 +53,7 @@
       color: var(--muted);
       font-size: 16px;
       line-height: 1.6;
-      max-width: 720px;
+      max-width: 760px;
     }
 
     .grid {
@@ -145,7 +145,7 @@
       margin-top: 12px;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .empty {
@@ -216,11 +216,6 @@
       font-size: 14px;
     }
 
-    .place-name {
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
     .place-note {
       color: var(--muted);
       font-size: 13px;
@@ -244,7 +239,7 @@
   <div class="container">
     <section class="hero">
       <h1>今天槟城拍拖去哪里？</h1>
-      <p class="subtitle">给在槟城选择困难的情侣一个快一点、甜一点的决定方式。选几个条件，我就帮你配出 3 个今天比较值得出发的真实约会地点。</p>
+      <p class="subtitle">v2.1 把地点库补厚一点、把预算层次拉开一点，也把环境从单纯室内室外改成更贴近现实的 mixed。现在它会更像一个真的在帮你做决定的约会网页。</p>
     </section>
 
     <div class="grid">
@@ -277,6 +272,7 @@
             <button class="chip active" data-value="any">随便</button>
             <button class="chip" data-value="indoor">室内</button>
             <button class="chip" data-value="outdoor">室外</button>
+            <button class="chip" data-value="mixed">混合型</button>
           </div>
         </div>
 
@@ -297,18 +293,18 @@
           <button class="secondary" id="resetBtn">重设</button>
         </div>
 
-        <p class="tiny">这版已经改成槟城真实地点 v2。你下一步最值得做的，是继续把地点资料补得更细，例如营业时间、适合白天还是晚上、有没有停车、适不适合下雨天。</p>
+        <p class="tiny">v2.1 重点是三件事：补更多地点、让高预算真的更像认真约会、还有把像 Gurney Bay / Straits Quay 这种地方改成 mixed，不再硬塞进单一室内或室外。</p>
       </section>
 
       <section class="card">
         <h2 class="section-title">推荐结果</h2>
         <div id="results">
-          <div class="empty">先选条件，然后按一下按钮。<br/>这次不是泛泛建议，而是比较像真的可以直接去的槟城地点。</div>
+          <div class="empty">先选条件，然后按一下按钮。<br/>这版已经补了更多餐厅、甜品、cafe 和比较有仪式感的高预算选项。</div>
         </div>
       </section>
     </div>
 
-    <div class="footer-note">Penang v2 · 纯前端手机网页 · 适合继续慢慢补地点库</div>
+    <div class="footer-note">Penang v2.1 · 扩地点库 · 修 budget 逻辑 · mixed setting</div>
   </div>
 
   <script>
@@ -321,56 +317,102 @@
 
     const places = [
       {
-        title: 'Penang Hill 半日约会',
-        place: 'Penang Hill / 升旗山',
-        area: 'Air Itam',
-        price: 'mid',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        badge: '经典',
-        meta: ['槟城代表', '半天', '空气比较凉'],
-        desc: '适合想认真出门一下、又不想太赶的日子。上山本身就有一点仪式感，走走看看风景，聊天也会比较有 mood。',
-        note: '比较适合白天到傍晚。天气好会加很多分。'
-      },
-      {
-        title: 'Hin Bus Depot 文青散步',
-        place: 'Hin Bus Depot',
-        area: 'George Town',
-        price: 'low',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        badge: '出片',
-        meta: ['文青感', '适合拍照', '轻松逛'],
-        desc: '很适合不想走太远，但又想这次见面有一点内容。看展、拍照、顺便附近找咖啡店，整个 flow 很顺。',
-        note: '适合 1 到 2 小时的轻量约会，也很好接下一站吃东西。'
-      },
-      {
-        title: 'Gurney Bay 看海放空',
+        title: 'Gurney Bay 吹风散步',
         place: 'Gurney Bay',
         area: 'Gurney',
         price: 'low',
         duration: 'short',
-        setting: 'outdoor',
+        setting: 'mixed',
         mood: 'chill',
+        tier: 'casual',
         badge: '舒服',
-        meta: ['低预算', '海边', '傍晚舒服'],
-        desc: '当两个人只是想见面，不想做太复杂的安排，来这里走走吹风就已经够好了。简单，但有陪伴感。',
-        note: '傍晚会比中午更适合，晒太阳的问题会少很多。'
+        meta: ['低预算', '吹风散步', '傍晚适合'],
+        desc: '适合那种只是想见面、不想把约会搞得太复杂的日子。走走、吹风、聊聊天，本身就很够了。',
+        note: '更适合傍晚，不然中午会比较晒。'
       },
       {
-        title: 'Armenian Street 老街拍拖 walk',
+        title: 'Armenian Street 老街拍照线',
         place: 'Armenian Street 一带',
         area: 'George Town',
         price: 'low',
         duration: 'half',
         setting: 'outdoor',
         mood: 'photo',
+        tier: 'casual',
         badge: '好拍',
         meta: ['老街', '边走边拍', '很槟城'],
-        desc: '如果你们喜欢边走边看小店、看墙面、顺便拍点照片，这里会很自然。不会太正式，但很有城市约会感。',
-        note: '适合搭配甜品店或咖啡店，一整套会更完整。'
+        desc: '适合喜欢边走边看小店、墙画和街景的情侣。不会太贵，但画面感和约会感都不错。',
+        note: '可以很自然接咖啡、甜品或晚餐。'
+      },
+      {
+        title: 'Hin Bus Depot + 附近咖啡店',
+        place: 'Hin Bus Depot',
+        area: 'George Town',
+        price: 'low',
+        duration: 'short',
+        setting: 'mixed',
+        mood: 'photo',
+        tier: 'casual',
+        badge: '文青',
+        meta: ['拍照', '轻松', '好接下一站'],
+        desc: '很适合不想跑太远，又想让今天见面有一点内容。看展、拍照，再去附近找地方坐，很顺。',
+        note: '1 到 2 小时刚好，也适合临时起意。'
+      },
+      {
+        title: 'Chew Jetty + 小吃散步',
+        place: 'Chew Jetty 一带',
+        area: 'George Town',
+        price: 'low',
+        duration: 'half',
+        setting: 'mixed',
+        mood: 'food',
+        tier: 'casual',
+        badge: '边走边吃',
+        meta: ['低预算', '轻松', '有探索感'],
+        desc: '适合想要一点走走看看、顺便吃点东西的约会。不会太正式，但很容易成行。',
+        note: '半天路线比较刚好，之后还能接甜品。'
+      },
+      {
+        title: 'Batu Ferringhi 傍晚海边散步',
+        place: 'Batu Ferringhi',
+        area: 'Batu Ferringhi',
+        price: 'low',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'special',
+        tier: 'casual',
+        badge: '浪漫',
+        meta: ['海边', '低预算', '傍晚加分'],
+        desc: '很适合那种不想花很多钱，但又想让今天看起来真的像约会的日子。海边自己会做气氛。',
+        note: '通常傍晚比白天舒服很多。'
+      },
+      {
+        title: 'Norm Micro Roastery 咖啡约会',
+        place: 'Norm Micro Roastery',
+        area: 'George Town',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'chill',
+        tier: 'balanced',
+        badge: '咖啡',
+        meta: ['轻松坐', '适合聊天', '不太赶'],
+        desc: '适合不想跑景点，只想找一间有质感的地方坐下来好好聊天。很适合日常拍拖。',
+        note: '适合接老街散步或甜品第二站。'
+      },
+      {
+        title: 'Ceki 甜品 + George Town 走走',
+        place: 'Ceki',
+        area: 'George Town',
+        price: 'mid',
+        duration: 'short',
+        setting: 'mixed',
+        mood: 'food',
+        tier: 'balanced',
+        badge: '甜甜的',
+        meta: ['甜品', '轻约会', '适合下午'],
+        desc: '想见面但又不想一次做太多事情的时候，甜品约会其实很够。坐一下，再附近散步，舒服又不累。',
+        note: '很适合下午时段。'
       },
       {
         title: 'Queensbay Mall 懒人稳阵约会',
@@ -380,49 +422,11 @@
         duration: 'half',
         setting: 'indoor',
         mood: 'chill',
+        tier: 'balanced',
         badge: '稳阵',
-        meta: ['室内', '下雨能去', '吃喝都方便'],
-        desc: '天气不稳、两个人都有点累、又还是想见面的时候，商场路线其实很强。吃饭、逛逛、买杯饮料，约会压力很低。',
-        note: '特别适合下雨天或不想晒太阳的日子。'
-      },
-      {
-        title: 'Straits Quay 傍晚海边路线',
-        place: 'Straits Quay',
-        area: 'Tanjung Tokong',
-        price: 'mid',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        badge: '气氛',
-        meta: ['海边感', '适合晚一点', '比较有仪式感'],
-        desc: '这里比较适合想让今天看起来稍微认真一点的时候。散步、看海、再找地方坐一下，整体气氛会比普通商场约会更有感觉。',
-        note: '傍晚到晚上比较有味道。'
-      },
-      {
-        title: 'Wonderfood Museum 轻松有趣约会',
-        place: 'Wonderfood Museum',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        badge: '有趣',
-        meta: ['室内', '适合拍照', '不无聊'],
-        desc: '如果你们今天不想只是坐着吃饭，这种轻松型景点很好用。不会太累，也比较容易拍到一些有记忆点的照片。',
-        note: '适合和老街散步或找吃的搭在一起。'
-      },
-      {
-        title: 'Batu Ferringhi 海边傍晚散步',
-        place: 'Batu Ferringhi',
-        area: 'Batu Ferringhi',
-        price: 'low',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        badge: '浪漫',
-        meta: ['海边', '低预算', '傍晚加分'],
-        desc: '很适合那种“今天不要想太多，去一个像约会的地方就好”的日子。海边本身就会帮你把气氛做出来。',
-        note: '白天会比较晒，通常傍晚去更舒服。'
+        meta: ['下雨备选', '吃喝方便', '压力很低'],
+        desc: '天气不稳、两个人都累累的、但还是想见面的时候，这种路线就是最稳。吃饭逛逛，不太会出错。',
+        note: '很适合下雨天和临时约会。'
       },
       {
         title: 'Gurney Plaza / Paragon 吃饭逛街组合',
@@ -430,25 +434,27 @@
         area: 'Gurney',
         price: 'mid',
         duration: 'half',
-        setting: 'indoor',
+        setting: 'mixed',
         mood: 'food',
+        tier: 'balanced',
         badge: '省脑',
-        meta: ['吃东西方便', '室内', '最容易成行'],
-        desc: '当你们连想去哪里都懒得想的时候，这种组合最实用。先解决吃，再慢慢逛，通常不会出大错。',
-        note: '适合临时约出来、不想花太多脑力 planning。'
+        meta: ['吃东西方便', '很容易成行', '日常拍拖'],
+        desc: '当你们懒得规划太多，但又想舒舒服服见个面，这种路线很实用。先吃，再慢慢逛，约会门槛低。',
+        note: '适合平日晚上或周末轻松型约会。'
       },
       {
-        title: 'Chew Jetty + George Town 小吃线',
-        place: 'Chew Jetty 一带',
+        title: 'Wonderfood Museum + 老街随走',
+        place: 'Wonderfood Museum',
         area: 'George Town',
-        price: 'low',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'food',
-        badge: '边走边吃',
-        meta: ['低预算', '游客感', '轻松'],
-        desc: '如果你们想要一点走走看看、再顺便吃点东西的感觉，这条线会很自然。不会太严肃，也比较有探索味道。',
-        note: '适合接晚餐或甜品，半天行程比较刚好。'
+        price: 'mid',
+        duration: 'short',
+        setting: 'mixed',
+        mood: 'photo',
+        tier: 'balanced',
+        badge: '有趣',
+        meta: ['不无聊', '适合拍照', '轻松'],
+        desc: '如果你们今天不想只是单纯吃饭，这种轻量景点很好用。不会太累，也更有记忆点。',
+        note: '可以搭配附近甜品或晚餐。'
       },
       {
         title: 'Pinang Peranakan Mansion 文艺路线',
@@ -458,10 +464,95 @@
         duration: 'short',
         setting: 'indoor',
         mood: 'special',
+        tier: 'balanced',
         badge: '精致',
-        meta: ['室内', '有内容', '比较特别'],
-        desc: '想让约会多一点“不是平时随便见面”的感觉，这种地方就很有用。气氛比较安静，也更容易认真聊天。',
-        note: '适合接咖啡或晚餐，让整次见面更完整。'
+        meta: ['有内容', '安静聊天', '比较特别'],
+        desc: '当你想让今天不只是随便见个面，这种地方就很有帮助。会多一点认真和完整的感觉。',
+        note: '很适合接咖啡或晚餐。'
+      },
+      {
+        title: 'Penang Hill 半日认真约会',
+        place: 'Penang Hill / 升旗山',
+        area: 'Air Itam',
+        price: 'mid',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'special',
+        tier: 'balanced',
+        badge: '经典',
+        meta: ['槟城代表', '半天', '比较认真'],
+        desc: '适合想让今天看起来像真正 outing 的时候。上山这件事本身就会让约会更有仪式感。',
+        note: '白天到傍晚比较适合，天气好会加很多分。'
+      },
+      {
+        title: 'Straits Quay 傍晚海边路线',
+        place: 'Straits Quay',
+        area: 'Tanjung Tokong',
+        price: 'mid',
+        duration: 'half',
+        setting: 'mixed',
+        mood: 'special',
+        tier: 'balanced',
+        badge: '气氛',
+        meta: ['海边感', '散步', '适合晚一点'],
+        desc: '适合想让今天有一点约会气氛，但又不一定要花很多钱。散步、看海、再找地方坐，很顺。',
+        note: '傍晚到晚上会更有感觉。'
+      },
+      {
+        title: 'Ferringhi Garden 认真晚餐',
+        place: 'Ferringhi Garden',
+        area: 'Batu Ferringhi',
+        price: 'high',
+        duration: 'half',
+        setting: 'mixed',
+        mood: 'food',
+        tier: 'premium',
+        badge: '认真吃',
+        meta: ['气氛餐厅', '比较正式', '适合庆祝'],
+        desc: '这类选择才比较符合高预算该有的感觉。不是单纯吃饱，而是整顿饭都会有“今天有认真安排”的味道。',
+        note: '适合纪念日、庆祝或想认真一点的晚上。'
+      },
+      {
+        title: 'Kebaya Dining Room 仪式感晚餐',
+        place: 'Kebaya Dining Room',
+        area: 'George Town',
+        price: 'high',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'special',
+        tier: 'premium',
+        badge: '仪式感',
+        meta: ['约会感强', '适合庆祝', '比较精致'],
+        desc: '如果你调高预算，是应该拿到这种等级的选择。更精致、更像 date night，也更适合留下深一点的印象。',
+        note: '适合想把普通见面升级成比较正式的约会。'
+      },
+      {
+        title: 'Orinea Skyline Dinner',
+        place: 'Orinea by Farquhar Mansion',
+        area: 'George Town',
+        price: 'high',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'special',
+        tier: 'premium',
+        badge: '高级',
+        meta: ['夜景感', '高预算', '适合认真约会'],
+        desc: '这就是高预算该有的升级感：环境、视野、整体体验都会比普通晚餐更像 special occasion。',
+        note: '比较适合晚上，适合庆祝型约会。'
+      },
+      {
+        title: 'Indigo at The Blue Mansion date night',
+        place: 'Indigo at The Blue Mansion',
+        area: 'George Town',
+        price: 'high',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'premium',
+        badge: 'date night',
+        meta: ['气氛好', '正式一点', '比较值得'],
+        desc: '当你想让“今晚吃饭”变成“今晚是约会”，这种地方就会很有差别。高预算终于会带来明显升级。',
+        note: '适合纪念日、补过节或想认真一点的时候。'
       },
       {
         title: 'The TOP / Komtar 城市景观点',
@@ -471,25 +562,69 @@
         duration: 'short',
         setting: 'indoor',
         mood: 'photo',
+        tier: 'premium',
         badge: '视野',
-        meta: ['拍照感强', '城市 view', '约会感明显'],
-        desc: '适合想让这次见面更有记忆点，或者想拍点不像平时逛街那样的照片。会比较像“我们今天有特地来一个地方”。',
-        note: '预算会高一点，但视觉效果会更明显。'
+        meta: ['城市 view', '记忆点高', '拍照感强'],
+        desc: '适合想拍点不像平时逛街那样的照片，或者想让这次见面更有“我们今天特地来一个地方”的感觉。',
+        note: '比普通行程更有视觉记忆点。'
+      },
+      {
+        title: 'Eastern & Oriental 下午茶感约会',
+        place: 'Eastern & Oriental Hotel 一带',
+        area: 'George Town',
+        price: 'high',
+        duration: 'short',
+        setting: 'mixed',
+        mood: 'special',
+        tier: 'premium',
+        badge: '高级感',
+        meta: ['afternoon tea vibe', '适合庆祝', '比较优雅'],
+        desc: '高预算不一定只能是晚餐，也可以是更优雅、更慢一点的下午约会。整体气质会很不一样。',
+        note: '适合想轻一点但还是有仪式感的约会。'
       }
     ];
 
     function scorePlace(place) {
       let score = 0;
-      if (state.budget === 'any' || place.price === state.budget) score += 2;
+
+      if (state.budget === 'any') {
+        score += 1;
+      } else if (place.price === state.budget) {
+        score += 5;
+      } else if (
+        (state.budget === 'mid' && (place.price === 'low' || place.price === 'high')) ||
+        (state.budget === 'low' && place.price === 'mid') ||
+        (state.budget === 'high' && place.price === 'mid')
+      ) {
+        score += 1;
+      } else {
+        score -= 4;
+      }
+
       if (state.duration === 'any' || place.duration === state.duration) score += 2;
-      if (state.setting === 'any' || place.setting === state.setting) score += 2;
-      if (state.mood === 'any' || place.mood === state.mood) score += 3;
+
+      if (state.setting === 'any') {
+        score += 1;
+      } else if (place.setting === state.setting) {
+        score += 3;
+      } else if (place.setting === 'mixed' || state.setting === 'mixed') {
+        score += 1;
+      } else {
+        score -= 2;
+      }
+
+      if (state.mood === 'any' || place.mood === state.mood) score += 4;
+
+      if (state.budget === 'high' && place.tier === 'premium') score += 3;
+      if (state.budget === 'low' && place.tier === 'premium') score -= 3;
+      if (state.budget === 'high' && place.tier === 'casual') score -= 2;
+
       return score;
     }
 
     function pickResults() {
       return [...places]
-        .map(place => ({ ...place, score: scorePlace(place) + Math.random() * 1.2 }))
+        .map(place => ({ ...place, score: scorePlace(place) + Math.random() * 0.9 }))
         .sort((a, b) => b.score - a.score)
         .slice(0, 3);
     }
@@ -508,6 +643,7 @@
               <div class="meta">
                 <span>${item.place}</span>
                 <span>${item.area}</span>
+                <span>${item.setting === 'mixed' ? '混合型' : item.setting === 'indoor' ? '室内' : '室外'}</span>
                 ${item.meta.map(tag => `<span>${tag}</span>`).join('')}
               </div>
               <p>${item.desc}</p>
@@ -542,7 +678,7 @@
           chip.classList.toggle('active', index === 0);
         });
       });
-      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这次不是泛泛建议，而是比较像真的可以直接去的槟城地点。</div>';
+      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这版已经补了更多餐厅、甜品、cafe 和比较有仪式感的高预算选项。</div>';
     });
   </script>
 </body>
