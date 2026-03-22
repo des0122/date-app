@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>今天拍拖去哪里？</title>
+  <title>今天槟城拍拖去哪里？</title>
   <style>
     :root {
       --bg: #fff8fb;
@@ -28,7 +28,7 @@
     }
 
     .container {
-      max-width: 980px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 24px 16px 48px;
     }
@@ -53,12 +53,12 @@
       color: var(--muted);
       font-size: 16px;
       line-height: 1.6;
-      max-width: 640px;
+      max-width: 720px;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 20px;
     }
 
@@ -155,6 +155,7 @@
       border: 1px dashed var(--line);
       border-radius: 18px;
       background: #fffdfd;
+      line-height: 1.7;
     }
 
     .result-list {
@@ -180,6 +181,7 @@
     .idea h3 {
       margin: 0;
       font-size: 18px;
+      line-height: 1.35;
     }
 
     .badge {
@@ -209,9 +211,20 @@
     }
 
     .idea p {
-      margin: 0;
+      margin: 0 0 10px;
       line-height: 1.6;
       font-size: 14px;
+    }
+
+    .place-name {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .place-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     .footer-note {
@@ -230,8 +243,8 @@
 <body>
   <div class="container">
     <section class="hero">
-      <h1>今天拍拖去哪里？</h1>
-      <p class="subtitle">给选择困难的情侣一个快一点、甜一点的决定方式。选几个条件，我就帮你配出 3 个今天可以直接出发的约会点子。</p>
+      <h1>今天槟城拍拖去哪里？</h1>
+      <p class="subtitle">给在槟城选择困难的情侣一个快一点、甜一点的决定方式。选几个条件，我就帮你配出 3 个今天比较值得出发的真实约会地点。</p>
     </section>
 
     <div class="grid">
@@ -279,22 +292,23 @@
         </div>
 
         <div class="actions">
-          <button class="primary" id="generateBtn">给我 3 个约会点子</button>
+          <button class="primary" id="generateBtn">给我 3 个槟城约会点子</button>
+          <button class="secondary" id="shuffleBtn">再换一组</button>
           <button class="secondary" id="resetBtn">重设</button>
         </div>
 
-        <p class="tiny">现在这个版本是 demo，所以地点是通用型约会建议。之后你可以把它换成槟城、KL，甚至只放你们自己真的会去的地方。</p>
+        <p class="tiny">这版已经改成槟城真实地点 v2。你下一步最值得做的，是继续把地点资料补得更细，例如营业时间、适合白天还是晚上、有没有停车、适不适合下雨天。</p>
       </section>
 
       <section class="card">
         <h2 class="section-title">推荐结果</h2>
         <div id="results">
-          <div class="empty">先选条件，然后按一下按钮。<br/>今天的拍拖计划就不用想太久了。</div>
+          <div class="empty">先选条件，然后按一下按钮。<br/>这次不是泛泛建议，而是比较像真的可以直接去的槟城地点。</div>
         </div>
       </section>
     </div>
 
-    <div class="footer-note">第一版单页 demo · 纯前端 · 直接双击就能打开</div>
+    <div class="footer-note">Penang v2 · 纯前端手机网页 · 适合继续慢慢补地点库</div>
   </div>
 
   <script>
@@ -305,91 +319,177 @@
       mood: 'any'
     };
 
-    const ideas = [
+    const places = [
       {
-        title: '咖啡店慢慢坐 + 散步聊天',
-        price: 'low', duration: 'short', setting: 'any', mood: 'chill',
-        badge: '稳阵',
-        meta: ['低预算', '轻松', '第一次也适合'],
-        desc: '先找一间舒服咖啡店坐一下，再到附近慢慢走。最适合不想太赶、只是想见到对方就很开心的那种日子。'
+        title: 'Penang Hill 半日约会',
+        place: 'Penang Hill / 升旗山',
+        area: 'Air Itam',
+        price: 'mid',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'special',
+        badge: '经典',
+        meta: ['槟城代表', '半天', '空气比较凉'],
+        desc: '适合想认真出门一下、又不想太赶的日子。上山本身就有一点仪式感，走走看看风景，聊天也会比较有 mood。',
+        note: '比较适合白天到傍晚。天气好会加很多分。'
       },
       {
-        title: '甜品店 + 拍照小街区',
-        price: 'mid', duration: 'half', setting: 'outdoor', mood: 'photo',
+        title: 'Hin Bus Depot 文青散步',
+        place: 'Hin Bus Depot',
+        area: 'George Town',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'photo',
         badge: '出片',
-        meta: ['适合拍照', '半天行程', '气氛感'],
-        desc: '先用甜品把 mood 拉起来，再去有墙面、老街或有光影的位置走走拍照，简单但很容易留下好看的回忆。'
+        meta: ['文青感', '适合拍照', '轻松逛'],
+        desc: '很适合不想走太远，但又想这次见面有一点内容。看展、拍照、顺便附近找咖啡店，整个 flow 很顺。',
+        note: '适合 1 到 2 小时的轻量约会，也很好接下一站吃东西。'
       },
       {
-        title: '商场约会：吃饭 + 逛书店 / 精品店',
-        price: 'mid', duration: 'half', setting: 'indoor', mood: 'chill',
-        badge: '下雨救星',
-        meta: ['室内', '稳定发挥', '不用晒'],
-        desc: '很适合天气不稳或者两个人都懒懒的日子。吃一顿舒服的，再一起乱逛，其实就已经很像拍拖了。'
+        title: 'Gurney Bay 看海放空',
+        place: 'Gurney Bay',
+        area: 'Gurney',
+        price: 'low',
+        duration: 'short',
+        setting: 'outdoor',
+        mood: 'chill',
+        badge: '舒服',
+        meta: ['低预算', '海边', '傍晚舒服'],
+        desc: '当两个人只是想见面，不想做太复杂的安排，来这里走走吹风就已经够好了。简单，但有陪伴感。',
+        note: '傍晚会比中午更适合，晒太阳的问题会少很多。'
       },
       {
-        title: '海边 / 公园看日落',
-        price: 'low', duration: 'half', setting: 'outdoor', mood: 'special',
+        title: 'Armenian Street 老街拍拖 walk',
+        place: 'Armenian Street 一带',
+        area: 'George Town',
+        price: 'low',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'photo',
+        badge: '好拍',
+        meta: ['老街', '边走边拍', '很槟城'],
+        desc: '如果你们喜欢边走边看小店、看墙面、顺便拍点照片，这里会很自然。不会太正式，但很有城市约会感。',
+        note: '适合搭配甜品店或咖啡店，一整套会更完整。'
+      },
+      {
+        title: 'Queensbay Mall 懒人稳阵约会',
+        place: 'Queensbay Mall',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'chill',
+        badge: '稳阵',
+        meta: ['室内', '下雨能去', '吃喝都方便'],
+        desc: '天气不稳、两个人都有点累、又还是想见面的时候，商场路线其实很强。吃饭、逛逛、买杯饮料，约会压力很低。',
+        note: '特别适合下雨天或不想晒太阳的日子。'
+      },
+      {
+        title: 'Straits Quay 傍晚海边路线',
+        place: 'Straits Quay',
+        area: 'Tanjung Tokong',
+        price: 'mid',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'special',
+        badge: '气氛',
+        meta: ['海边感', '适合晚一点', '比较有仪式感'],
+        desc: '这里比较适合想让今天看起来稍微认真一点的时候。散步、看海、再找地方坐一下，整体气氛会比普通商场约会更有感觉。',
+        note: '傍晚到晚上比较有味道。'
+      },
+      {
+        title: 'Wonderfood Museum 轻松有趣约会',
+        place: 'Wonderfood Museum',
+        area: 'George Town',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'photo',
+        badge: '有趣',
+        meta: ['室内', '适合拍照', '不无聊'],
+        desc: '如果你们今天不想只是坐着吃饭，这种轻松型景点很好用。不会太累，也比较容易拍到一些有记忆点的照片。',
+        note: '适合和老街散步或找吃的搭在一起。'
+      },
+      {
+        title: 'Batu Ferringhi 海边傍晚散步',
+        place: 'Batu Ferringhi',
+        area: 'Batu Ferringhi',
+        price: 'low',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'special',
         badge: '浪漫',
-        meta: ['仪式感', '低成本', '傍晚最佳'],
-        desc: '不用花很多钱，但会有一种“今天有认真一起过”的感觉。可以顺便带饮料、小零食，聊天会很有氛围。'
+        meta: ['海边', '低预算', '傍晚加分'],
+        desc: '很适合那种“今天不要想太多，去一个像约会的地方就好”的日子。海边本身就会帮你把气氛做出来。',
+        note: '白天会比较晒，通常傍晚去更舒服。'
       },
       {
-        title: '找一间想试很久的餐厅',
-        price: 'high', duration: 'half', setting: 'indoor', mood: 'food',
-        badge: '满足',
-        meta: ['吃货专用', '仪式感', '认真约会'],
-        desc: '把“今天吃什么”升级成“今天值得吃什么”。适合庆祝、补过节，或者单纯想让这次见面特别一点。'
+        title: 'Gurney Plaza / Paragon 吃饭逛街组合',
+        place: 'Gurney Plaza / Gurney Paragon',
+        area: 'Gurney',
+        price: 'mid',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'food',
+        badge: '省脑',
+        meta: ['吃东西方便', '室内', '最容易成行'],
+        desc: '当你们连想去哪里都懒得想的时候，这种组合最实用。先解决吃，再慢慢逛，通常不会出大错。',
+        note: '适合临时约出来、不想花太多脑力 planning。'
       },
       {
-        title: '夜市 / 小吃扫街',
-        price: 'low', duration: 'short', setting: 'outdoor', mood: 'food',
-        badge: '快乐',
-        meta: ['边走边吃', '不拘谨', '轻松开心'],
-        desc: '特别适合想见面但不想太正式的时候。可以边走边吃、边讲废话，约会压力会低很多。'
+        title: 'Chew Jetty + George Town 小吃线',
+        place: 'Chew Jetty 一带',
+        area: 'George Town',
+        price: 'low',
+        duration: 'half',
+        setting: 'outdoor',
+        mood: 'food',
+        badge: '边走边吃',
+        meta: ['低预算', '游客感', '轻松'],
+        desc: '如果你们想要一点走走看看、再顺便吃点东西的感觉，这条线会很自然。不会太严肃，也比较有探索味道。',
+        note: '适合接晚餐或甜品，半天行程比较刚好。'
       },
       {
-        title: '美术馆 / 展览 + 晚餐',
-        price: 'mid', duration: 'half', setting: 'indoor', mood: 'special',
-        badge: '文艺',
-        meta: ['有内容', '适合聊天', '比较特别'],
-        desc: '一起看展很容易自然聊到很多东西，之后再去吃饭，整天会有种很完整的感觉。'
+        title: 'Pinang Peranakan Mansion 文艺路线',
+        place: 'Pinang Peranakan Mansion',
+        area: 'George Town',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'special',
+        badge: '精致',
+        meta: ['室内', '有内容', '比较特别'],
+        desc: '想让约会多一点“不是平时随便见面”的感觉，这种地方就很有用。气氛比较安静，也更容易认真聊天。',
+        note: '适合接咖啡或晚餐，让整次见面更完整。'
       },
       {
-        title: '一日 mini adventure：早餐 + 新地方 + 晚餐',
-        price: 'high', duration: 'full', setting: 'any', mood: 'special',
-        badge: '认真玩',
-        meta: ['全天', '像小旅行', '记忆点高'],
-        desc: '适合两个人都空得出来，想让这一天更像真正的 outing。重点不一定是去哪里，而是整天都在一起。'
-      },
-      {
-        title: '桌游 / 保龄球 / 室内活动',
-        price: 'mid', duration: 'short', setting: 'indoor', mood: 'chill',
-        badge: '不尴尬',
-        meta: ['有互动', '室内', '不怕没话题'],
-        desc: '当你们不想只是坐着吃饭，室内活动会很有用。一起玩点东西，气氛通常会自然变好。'
-      },
-      {
-        title: '城市 walk：一人带一个想去的小点',
-        price: 'low', duration: 'full', setting: 'outdoor', mood: 'photo',
-        badge: '探索',
-        meta: ['很 personal', '有参与感', '适合拍'],
-        desc: '一人选一个点，组合成今天路线。这样不会总是只有一个人在想，也更像你们共同完成的一天。'
+        title: 'The TOP / Komtar 城市景观点',
+        place: 'The TOP at Komtar',
+        area: 'George Town',
+        price: 'high',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'photo',
+        badge: '视野',
+        meta: ['拍照感强', '城市 view', '约会感明显'],
+        desc: '适合想让这次见面更有记忆点，或者想拍点不像平时逛街那样的照片。会比较像“我们今天有特地来一个地方”。',
+        note: '预算会高一点，但视觉效果会更明显。'
       }
     ];
 
-    function scoreIdea(idea) {
+    function scorePlace(place) {
       let score = 0;
-      if (state.budget === 'any' || idea.price === state.budget) score += 2;
-      if (state.duration === 'any' || idea.duration === state.duration) score += 2;
-      if (state.setting === 'any' || idea.setting === state.setting || idea.setting === 'any') score += 2;
-      if (state.mood === 'any' || idea.mood === state.mood) score += 3;
+      if (state.budget === 'any' || place.price === state.budget) score += 2;
+      if (state.duration === 'any' || place.duration === state.duration) score += 2;
+      if (state.setting === 'any' || place.setting === state.setting) score += 2;
+      if (state.mood === 'any' || place.mood === state.mood) score += 3;
       return score;
     }
 
     function pickResults() {
-      return [...ideas]
-        .map(idea => ({ ...idea, score: scoreIdea(idea) + Math.random() * 0.8 }))
+      return [...places]
+        .map(place => ({ ...place, score: scorePlace(place) + Math.random() * 1.2 }))
         .sort((a, b) => b.score - a.score)
         .slice(0, 3);
     }
@@ -406,9 +506,12 @@
                 <span class="badge">${item.badge}</span>
               </div>
               <div class="meta">
+                <span>${item.place}</span>
+                <span>${item.area}</span>
                 ${item.meta.map(tag => `<span>${tag}</span>`).join('')}
               </div>
               <p>${item.desc}</p>
+              <div class="place-note">${item.note}</div>
             </article>
           `).join('')}
         </div>
@@ -427,6 +530,7 @@
     });
 
     document.getElementById('generateBtn').addEventListener('click', renderResults);
+    document.getElementById('shuffleBtn').addEventListener('click', renderResults);
 
     document.getElementById('resetBtn').addEventListener('click', () => {
       state.budget = 'any';
@@ -438,7 +542,7 @@
           chip.classList.toggle('active', index === 0);
         });
       });
-      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>今天的拍拖计划就不用想太久了。</div>';
+      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这次不是泛泛建议，而是比较像真的可以直接去的槟城地点。</div>';
     });
   </script>
 </body>
