@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>今天拍拖去哪里？</title>
+  <style>
+    :root {
+      --bg: #fff8fb;
+      --card: #ffffff;
+      --text: #2d2330;
+      --muted: #7c6b78;
+      --primary: #ff6fa9;
+      --primary-dark: #e7548f;
+      --line: #f2dbe7;
+      --chip: #fff1f7;
+      --shadow: 0 12px 30px rgba(228, 84, 143, 0.12);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(180deg, #fff8fb 0%, #fffdfd 100%);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .hero {
+      background: radial-gradient(circle at top right, #ffd3e4 0%, #fff8fb 40%, #ffffff 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 640px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 14px;
+    }
+
+    .chip:hover { transform: translateY(-1px); }
+
+    .chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    button.primary, button.secondary {
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(231, 84, 143, 0.22);
+    }
+
+    button.primary:hover { background: var(--primary-dark); }
+
+    button.secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .tiny {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 36px 18px;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: #fffdfd;
+    }
+
+    .result-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .idea {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(180deg, #ffffff, #fff9fc);
+    }
+
+    .idea-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .idea h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      background: #ffe6f0;
+      color: #b63369;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 12px;
+    }
+
+    .meta span {
+      font-size: 12px;
+      color: var(--muted);
+      background: #faf3f7;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+    }
+
+    .idea p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero, .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>今天拍拖去哪里？</h1>
+      <p class="subtitle">给选择困难的情侣一个快一点、甜一点的决定方式。选几个条件，我就帮你配出 3 个今天可以直接出发的约会点子。</p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2 class="section-title">先选今天的感觉</h2>
+
+        <div class="field">
+          <span class="label">预算</span>
+          <div class="chips" data-group="budget">
+            <button class="chip active" data-value="any">随便啦</button>
+            <button class="chip" data-value="low">RM30 以下</button>
+            <button class="chip" data-value="mid">RM30 - RM80</button>
+            <button class="chip" data-value="high">RM80 以上</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label">时长</span>
+          <div class="chips" data-group="duration">
+            <button class="chip active" data-value="any">都可以</button>
+            <button class="chip" data-value="short">1 - 2 小时</button>
+            <button class="chip" data-value="half">半天</button>
+            <button class="chip" data-value="full">全天</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label">环境</span>
+          <div class="chips" data-group="setting">
+            <button class="chip active" data-value="any">随便</button>
+            <button class="chip" data-value="indoor">室内</button>
+            <button class="chip" data-value="outdoor">室外</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="label">心情</span>
+          <div class="chips" data-group="mood">
+            <button class="chip active" data-value="any">没想法</button>
+            <button class="chip" data-value="chill">轻松放空</button>
+            <button class="chip" data-value="photo">想拍照</button>
+            <button class="chip" data-value="food">想吃东西</button>
+            <button class="chip" data-value="special">想有仪式感</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="generateBtn">给我 3 个约会点子</button>
+          <button class="secondary" id="resetBtn">重设</button>
+        </div>
+
+        <p class="tiny">现在这个版本是 demo，所以地点是通用型约会建议。之后你可以把它换成槟城、KL，甚至只放你们自己真的会去的地方。</p>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">推荐结果</h2>
+        <div id="results">
+          <div class="empty">先选条件，然后按一下按钮。<br/>今天的拍拖计划就不用想太久了。</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-note">第一版单页 demo · 纯前端 · 直接双击就能打开</div>
+  </div>
+
+  <script>
+    const state = {
+      budget: 'any',
+      duration: 'any',
+      setting: 'any',
+      mood: 'any'
+    };
+
+    const ideas = [
+      {
+        title: '咖啡店慢慢坐 + 散步聊天',
+        price: 'low', duration: 'short', setting: 'any', mood: 'chill',
+        badge: '稳阵',
+        meta: ['低预算', '轻松', '第一次也适合'],
+        desc: '先找一间舒服咖啡店坐一下，再到附近慢慢走。最适合不想太赶、只是想见到对方就很开心的那种日子。'
+      },
+      {
+        title: '甜品店 + 拍照小街区',
+        price: 'mid', duration: 'half', setting: 'outdoor', mood: 'photo',
+        badge: '出片',
+        meta: ['适合拍照', '半天行程', '气氛感'],
+        desc: '先用甜品把 mood 拉起来，再去有墙面、老街或有光影的位置走走拍照，简单但很容易留下好看的回忆。'
+      },
+      {
+        title: '商场约会：吃饭 + 逛书店 / 精品店',
+        price: 'mid', duration: 'half', setting: 'indoor', mood: 'chill',
+        badge: '下雨救星',
+        meta: ['室内', '稳定发挥', '不用晒'],
+        desc: '很适合天气不稳或者两个人都懒懒的日子。吃一顿舒服的，再一起乱逛，其实就已经很像拍拖了。'
+      },
+      {
+        title: '海边 / 公园看日落',
+        price: 'low', duration: 'half', setting: 'outdoor', mood: 'special',
+        badge: '浪漫',
+        meta: ['仪式感', '低成本', '傍晚最佳'],
+        desc: '不用花很多钱，但会有一种“今天有认真一起过”的感觉。可以顺便带饮料、小零食，聊天会很有氛围。'
+      },
+      {
+        title: '找一间想试很久的餐厅',
+        price: 'high', duration: 'half', setting: 'indoor', mood: 'food',
+        badge: '满足',
+        meta: ['吃货专用', '仪式感', '认真约会'],
+        desc: '把“今天吃什么”升级成“今天值得吃什么”。适合庆祝、补过节，或者单纯想让这次见面特别一点。'
+      },
+      {
+        title: '夜市 / 小吃扫街',
+        price: 'low', duration: 'short', setting: 'outdoor', mood: 'food',
+        badge: '快乐',
+        meta: ['边走边吃', '不拘谨', '轻松开心'],
+        desc: '特别适合想见面但不想太正式的时候。可以边走边吃、边讲废话，约会压力会低很多。'
+      },
+      {
+        title: '美术馆 / 展览 + 晚餐',
+        price: 'mid', duration: 'half', setting: 'indoor', mood: 'special',
+        badge: '文艺',
+        meta: ['有内容', '适合聊天', '比较特别'],
+        desc: '一起看展很容易自然聊到很多东西，之后再去吃饭，整天会有种很完整的感觉。'
+      },
+      {
+        title: '一日 mini adventure：早餐 + 新地方 + 晚餐',
+        price: 'high', duration: 'full', setting: 'any', mood: 'special',
+        badge: '认真玩',
+        meta: ['全天', '像小旅行', '记忆点高'],
+        desc: '适合两个人都空得出来，想让这一天更像真正的 outing。重点不一定是去哪里，而是整天都在一起。'
+      },
+      {
+        title: '桌游 / 保龄球 / 室内活动',
+        price: 'mid', duration: 'short', setting: 'indoor', mood: 'chill',
+        badge: '不尴尬',
+        meta: ['有互动', '室内', '不怕没话题'],
+        desc: '当你们不想只是坐着吃饭，室内活动会很有用。一起玩点东西，气氛通常会自然变好。'
+      },
+      {
+        title: '城市 walk：一人带一个想去的小点',
+        price: 'low', duration: 'full', setting: 'outdoor', mood: 'photo',
+        badge: '探索',
+        meta: ['很 personal', '有参与感', '适合拍'],
+        desc: '一人选一个点，组合成今天路线。这样不会总是只有一个人在想，也更像你们共同完成的一天。'
+      }
+    ];
+
+    function scoreIdea(idea) {
+      let score = 0;
+      if (state.budget === 'any' || idea.price === state.budget) score += 2;
+      if (state.duration === 'any' || idea.duration === state.duration) score += 2;
+      if (state.setting === 'any' || idea.setting === state.setting || idea.setting === 'any') score += 2;
+      if (state.mood === 'any' || idea.mood === state.mood) score += 3;
+      return score;
+    }
+
+    function pickResults() {
+      return [...ideas]
+        .map(idea => ({ ...idea, score: scoreIdea(idea) + Math.random() * 0.8 }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+    }
+
+    function renderResults() {
+      const results = pickResults();
+      const root = document.getElementById('results');
+      root.innerHTML = `
+        <div class="result-list">
+          ${results.map(item => `
+            <article class="idea">
+              <div class="idea-top">
+                <h3>${item.title}</h3>
+                <span class="badge">${item.badge}</span>
+              </div>
+              <div class="meta">
+                ${item.meta.map(tag => `<span>${tag}</span>`).join('')}
+              </div>
+              <p>${item.desc}</p>
+            </article>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    document.querySelectorAll('[data-group]').forEach(group => {
+      group.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        const key = group.dataset.group;
+        state[key] = chip.dataset.value;
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+    document.getElementById('generateBtn').addEventListener('click', renderResults);
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state.budget = 'any';
+      state.duration = 'any';
+      state.setting = 'any';
+      state.mood = 'any';
+      document.querySelectorAll('[data-group]').forEach(group => {
+        group.querySelectorAll('.chip').forEach((chip, index) => {
+          chip.classList.toggle('active', index === 0);
+        });
+      });
+      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>今天的拍拖计划就不用想太久了。</div>';
+    });
+  </script>
+</body>
+</html>
