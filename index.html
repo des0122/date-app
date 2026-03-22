@@ -693,10 +693,25 @@
     }
 
     function pickResults() {
-      return [...places]
-        .map(place => ({ ...place, score: scorePlace(place) + Math.random() * 0.9 }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3);
+      const scored = [...places]
+        .map(place => ({ ...place, score: scorePlace(place) }))
+        .sort((a, b) => b.score - a.score);
+
+      const topScore = scored[0]?.score ?? 0;
+      const pool = scored.filter(place => place.score >= topScore - 3);
+      const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
+
+      let results = shuffledPool.slice(0, 3);
+      let resultKeys = results.map(item => item.title).sort();
+
+      if (lastResultKeys.length && JSON.stringify(resultKeys) === JSON.stringify(lastResultKeys)) {
+        const fallbackPool = [...scored.slice(0, 8)].sort(() => Math.random() - 0.5);
+        results = fallbackPool.slice(0, 3);
+        resultKeys = results.map(item => item.title).sort();
+      }
+
+      lastResultKeys = resultKeys;
+      return results;
     }
 
     function renderResults() {
@@ -743,6 +758,7 @@
       state.duration = 'any';
       state.setting = 'any';
       state.mood = 'any';
+      lastResultKeys = [];
       document.querySelectorAll('[data-group]').forEach(group => {
         group.querySelectorAll('.chip').forEach((chip, index) => {
           chip.classList.toggle('active', index === 0);
@@ -753,3 +769,4 @@
   </script>
 </body>
 </html>
+
