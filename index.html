@@ -133,13 +133,37 @@
     }
 
     button.primary {
-      background: var(--primary);
+      background: linear-gradient(135deg, #2f2433 0%, #443248 100%);
       color: white;
-      font-weight: 700;
-      box-shadow: 0 10px 20px rgba(231, 84, 143, 0.22);
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(45, 35, 48, 0.22);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
     }
 
-    button.primary:hover { background: var(--primary-dark); }
+    button.primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.22) 50%, transparent 65%);
+      transform: translateX(-140%);
+      transition: transform 0.7s ease;
+    }
+
+    button.primary:hover {
+      background: linear-gradient(135deg, #241b27 0%, #3a2a3e 100%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 18px 34px rgba(45, 35, 48, 0.28);
+    }
+
+    button.primary:hover::before {
+      transform: translateX(140%);
+    }
+
+    button.primary:active {
+      transform: translateY(0) scale(0.99);
+    }
 
     button.secondary {
       background: white;
@@ -245,7 +269,6 @@
   <div class="container">
     <section class="hero">
       <h1>今天槟城拍拖去哪里？</h1>
-      <p class="subtitle">v2.2 修好按钮、补上更多高预算餐厅，也把再换一组改得更像真的在换新组合，不会老是给你同一套。</p>
     </section>
 
     <div class="grid">
@@ -294,25 +317,21 @@
         </div>
 
         <div class="actions">
-          <button type="button" class="primary" id="generateBtn">给我 3 个槟城约会点子</button>
+          <button type="button" class="primary" id="generateBtn">帮我决定今天去哪里</button>
           <button type="button" class="secondary" id="resetBtn">重设</button>
         </div>
-
-        <p class="tiny">这版重点是把网站重新修稳，然后让 shuffle 更自然：不会一直重复上一组，也会优先从高分候选池里换新组合。</p>
       </section>
 
       <section class="card">
         <h2 class="section-title">推荐结果</h2>
         <div id="results">
-          <div class="empty">先选条件，然后按一下按钮。<br/>这版已经修好按钮，也让再换一组更有变化。</div>
+          <div class="empty">先选条件，然后按一下按钮。</div>
         </div>
         <div class="results-actions">
           <button type="button" class="secondary" id="shuffleBtn">再换一组</button>
         </div>
       </section>
     </div>
-
-    <div class="footer-note">Penang v2.2 · fixed buttons · better shuffle · more premium spots</div>
   </div>
 
   <script>
@@ -802,7 +821,7 @@
           chip.classList.toggle('active', index === 0);
         });
       });
-      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这版已经修好按钮，也让再换一组更有变化。</div>';
+      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。</div>';
     });
   </script>
 </body>
