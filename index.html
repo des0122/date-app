@@ -117,6 +117,12 @@
       margin-top: 22px;
     }
 
+    .results-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
     button.primary, button.secondary {
       border: 0;
       border-radius: 999px;
@@ -239,7 +245,7 @@
   <div class="container">
     <section class="hero">
       <h1>今天槟城拍拖去哪里？</h1>
-      <p class="subtitle">v2.1 把地点库补厚一点、把预算层次拉开一点，也把环境从单纯室内室外改成更贴近现实的 mixed。现在它会更像一个真的在帮你做决定的约会网页。</p>
+      <p class="subtitle">v2.2 修好按钮、补上更多高预算餐厅，也把再换一组改得更像真的在换新组合，不会老是给你同一套。</p>
     </section>
 
     <div class="grid">
@@ -249,62 +255,64 @@
         <div class="field">
           <span class="label">预算</span>
           <div class="chips" data-group="budget">
-            <button class="chip active" data-value="any">随便啦</button>
-            <button class="chip" data-value="low">RM30 以下</button>
-            <button class="chip" data-value="mid">RM30 - RM80</button>
-            <button class="chip" data-value="high">RM80 以上</button>
+            <button type="button" class="chip active" data-value="any">随便啦</button>
+            <button type="button" class="chip" data-value="low">RM30 以下</button>
+            <button type="button" class="chip" data-value="mid">RM30 - RM80</button>
+            <button type="button" class="chip" data-value="high">RM80 以上</button>
           </div>
         </div>
 
         <div class="field">
           <span class="label">时长</span>
           <div class="chips" data-group="duration">
-            <button class="chip active" data-value="any">都可以</button>
-            <button class="chip" data-value="short">1 - 2 小时</button>
-            <button class="chip" data-value="half">半天</button>
-            <button class="chip" data-value="full">全天</button>
+            <button type="button" class="chip active" data-value="any">都可以</button>
+            <button type="button" class="chip" data-value="short">1 - 2 小时</button>
+            <button type="button" class="chip" data-value="half">半天</button>
+            <button type="button" class="chip" data-value="full">全天</button>
           </div>
         </div>
 
         <div class="field">
           <span class="label">环境</span>
           <div class="chips" data-group="setting">
-            <button class="chip active" data-value="any">随便</button>
-            <button class="chip" data-value="indoor">室内</button>
-            <button class="chip" data-value="outdoor">室外</button>
-            <button class="chip" data-value="mixed">混合型</button>
+            <button type="button" class="chip active" data-value="any">随便</button>
+            <button type="button" class="chip" data-value="indoor">室内</button>
+            <button type="button" class="chip" data-value="outdoor">室外</button>
+            <button type="button" class="chip" data-value="mixed">混合型</button>
           </div>
         </div>
 
         <div class="field">
           <span class="label">心情</span>
           <div class="chips" data-group="mood">
-            <button class="chip active" data-value="any">没想法</button>
-            <button class="chip" data-value="chill">轻松放空</button>
-            <button class="chip" data-value="photo">想拍照</button>
-            <button class="chip" data-value="food">想吃东西</button>
-            <button class="chip" data-value="special">想有仪式感</button>
+            <button type="button" class="chip active" data-value="any">没想法</button>
+            <button type="button" class="chip" data-value="chill">轻松放空</button>
+            <button type="button" class="chip" data-value="photo">想拍照</button>
+            <button type="button" class="chip" data-value="food">想吃东西</button>
+            <button type="button" class="chip" data-value="special">想有仪式感</button>
           </div>
         </div>
 
         <div class="actions">
-          <button class="primary" id="generateBtn">给我 3 个槟城约会点子</button>
-          <button class="secondary" id="shuffleBtn">再换一组</button>
-          <button class="secondary" id="resetBtn">重设</button>
+          <button type="button" class="primary" id="generateBtn">给我 3 个槟城约会点子</button>
+          <button type="button" class="secondary" id="resetBtn">重设</button>
         </div>
 
-        <p class="tiny">v2.1 重点是三件事：补更多地点、让高预算真的更像认真约会、还有把像 Gurney Bay / Straits Quay 这种地方改成 mixed，不再硬塞进单一室内或室外。</p>
+        <p class="tiny">这版重点是把网站重新修稳，然后让 shuffle 更自然：不会一直重复上一组，也会优先从高分候选池里换新组合。</p>
       </section>
 
       <section class="card">
         <h2 class="section-title">推荐结果</h2>
         <div id="results">
-          <div class="empty">先选条件，然后按一下按钮。<br/>这版已经补了更多餐厅、甜品、cafe 和比较有仪式感的高预算选项。</div>
+          <div class="empty">先选条件，然后按一下按钮。<br/>这版已经修好按钮，也让再换一组更有变化。</div>
+        </div>
+        <div class="results-actions">
+          <button type="button" class="secondary" id="shuffleBtn">再换一组</button>
         </div>
       </section>
     </div>
 
-    <div class="footer-note">Penang v2.1 · 扩地点库 · 修 budget 逻辑 · mixed setting</div>
+    <div class="footer-note">Penang v2.2 · fixed buttons · better shuffle · more premium spots</div>
   </div>
 
   <script>
@@ -314,6 +322,9 @@
       setting: 'any',
       mood: 'any'
     };
+
+    let lastResultKeys = [];
+    let recentHistory = [];
 
     const places = [
       {
@@ -523,9 +534,9 @@
         tier: 'premium',
         badge: '认真吃',
         meta: ['气氛餐厅', '比较正式', '适合庆祝'],
-        desc: '这类选择才比较符合高预算该有的感觉。不是单纯吃饱，而是整顿饭都会有“今天有认真安排”的味道。',
+        desc: '这类选择才比较符合高预算该有的感觉。不是单纯吃饱，而是整顿饭都会有今天有认真安排的味道。',
         note: '适合纪念日、庆祝或想认真一点的晚上。'
-      }
+      },
       {
         title: 'Kebaya Dining Room 仪式感晚餐',
         place: 'Kebaya Dining Room',
@@ -567,7 +578,7 @@
         meta: ['精致空间', '适合聊天', '比较特别'],
         desc: '适合想要一点不同于普通 cafe 的环境感。复古空间会让这次见面看起来更像刻意安排过的约会。',
         note: '比较适合下午到晚上，走轻仪式感路线。'
-      }
+      },
       {
         title: 'Indigo at The Blue Mansion date night',
         place: 'Indigo at The Blue Mansion',
@@ -579,7 +590,7 @@
         tier: 'premium',
         badge: 'date night',
         meta: ['气氛好', '正式一点', '比较值得'],
-        desc: '当你想让“今晚吃饭”变成“今晚是约会”，这种地方就会很有差别。高预算终于会带来明显升级。',
+        desc: '当你想让今晚吃饭变成今晚是约会，这种地方就会很有差别。高预算终于会带来明显升级。',
         note: '适合纪念日、补过节或想认真一点的时候。'
       },
       {
@@ -635,9 +646,9 @@
         tier: 'premium',
         badge: '视野',
         meta: ['城市 view', '记忆点高', '拍照感强'],
-        desc: '适合想拍点不像平时逛街那样的照片，或者想让这次见面更有“我们今天特地来一个地方”的感觉。',
+        desc: '适合想拍点不像平时逛街那样的照片，或者想让这次见面更有我们今天特地来一个地方的感觉。',
         note: '比普通行程更有视觉记忆点。'
-      }
+      },
       {
         title: 'Eastern & Oriental 下午茶感约会',
         place: 'Eastern & Oriental Hotel 一带',
@@ -660,7 +671,7 @@
       if (state.budget === 'any') {
         score += 1;
       } else if (place.price === state.budget) {
-        score += 5;
+        score += 6;
       } else if (
         (state.budget === 'mid' && (place.price === 'low' || place.price === 'high')) ||
         (state.budget === 'low' && place.price === 'mid') ||
@@ -668,7 +679,7 @@
       ) {
         score += 1;
       } else {
-        score -= 4;
+        score -= 5;
       }
 
       if (state.duration === 'any' || place.duration === state.duration) score += 2;
@@ -685,33 +696,59 @@
 
       if (state.mood === 'any' || place.mood === state.mood) score += 4;
 
-      if (state.budget === 'high' && place.tier === 'premium') score += 3;
-      if (state.budget === 'low' && place.tier === 'premium') score -= 3;
-      if (state.budget === 'high' && place.tier === 'casual') score -= 2;
+      if (state.budget === 'high' && place.tier === 'premium') score += 4;
+      if (state.budget === 'low' && place.tier === 'premium') score -= 4;
+      if (state.budget === 'high' && place.tier === 'casual') score -= 3;
+
+      if (recentHistory.includes(place.title)) score -= 2.5;
 
       return score;
     }
 
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getResultKeys(results) {
+      return results.map(item => item.title).sort();
+    }
+
+    function sameKeys(a, b) {
+      return JSON.stringify(a) === JSON.stringify(b);
+    }
+
     function pickResults() {
-      const scored = [...places]
+      const scored = places
         .map(place => ({ ...place, score: scorePlace(place) }))
         .sort((a, b) => b.score - a.score);
 
       const topScore = scored[0]?.score ?? 0;
-      const pool = scored.filter(place => place.score >= topScore - 3);
-      const shuffledPool = [...pool].sort(() => Math.random() - 0.5);
+      let pool = scored.filter(place => place.score >= topScore - 3);
+      if (pool.length < 6) pool = scored.slice(0, Math.min(10, scored.length));
 
-      let results = shuffledPool.slice(0, 3);
-      let resultKeys = results.map(item => item.title).sort();
+      let bestResults = shuffleArray(pool).slice(0, 3);
+      let bestKeys = getResultKeys(bestResults);
 
-      if (lastResultKeys.length && JSON.stringify(resultKeys) === JSON.stringify(lastResultKeys)) {
-        const fallbackPool = [...scored.slice(0, 8)].sort(() => Math.random() - 0.5);
-        results = fallbackPool.slice(0, 3);
-        resultKeys = results.map(item => item.title).sort();
+      for (let attempt = 0; attempt < 8; attempt++) {
+        const candidatePool = attempt < 5 ? pool : scored.slice(0, Math.min(12, scored.length));
+        const candidate = shuffleArray(candidatePool).slice(0, 3);
+        const candidateKeys = getResultKeys(candidate);
+
+        if (!sameKeys(candidateKeys, lastResultKeys)) {
+          bestResults = candidate;
+          bestKeys = candidateKeys;
+          break;
+        }
       }
 
-      lastResultKeys = resultKeys;
-      return results;
+      lastResultKeys = bestKeys;
+      recentHistory = [...new Set([...recentHistory, ...bestKeys])].slice(-6);
+      return bestResults;
     }
 
     function renderResults() {
@@ -759,12 +796,13 @@
       state.setting = 'any';
       state.mood = 'any';
       lastResultKeys = [];
+      recentHistory = [];
       document.querySelectorAll('[data-group]').forEach(group => {
         group.querySelectorAll('.chip').forEach((chip, index) => {
           chip.classList.toggle('active', index === 0);
         });
       });
-      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这版已经补了更多餐厅、甜品、cafe 和比较有仪式感的高预算选项。</div>';
+      document.getElementById('results').innerHTML = '<div class="empty">先选条件，然后按一下按钮。<br/>这版已经修好按钮，也让再换一组更有变化。</div>';
     });
   </script>
 </body>
