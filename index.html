@@ -252,6 +252,34 @@
       line-height: 1.6;
     }
 
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .place-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .place-link:hover {
+      transform: translateY(-1px);
+      border-color: #e3bfd0;
+      background: #fff7fb;
+    }
+
     .footer-note {
       text-align: center;
       color: var(--muted);
@@ -344,6 +372,14 @@
 
     let lastResultKeys = [];
     let recentHistory = [];
+
+    function buildGoogleMapsUrl(placeName) {
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeName + ' Penang')}`;
+    }
+
+    function buildGoogleReviewsUrl(placeName) {
+      return `https://www.google.com/search?q=${encodeURIComponent(placeName + ' Penang google reviews')}`;
+    }
 
     const places = [
       {
@@ -1313,7 +1349,11 @@
 
       lastResultKeys = bestKeys;
       recentHistory = [...new Set([...recentHistory, ...bestKeys])].slice(-6);
-      return bestResults;
+      return bestResults.map(item => ({
+        ...item,
+        googleMapsUrl: item.googleMapsUrl || buildGoogleMapsUrl(item.place),
+        googleReviewsUrl: item.googleReviewsUrl || buildGoogleReviewsUrl(item.place)
+      }));
     }
 
     function renderResults() {
@@ -1335,6 +1375,10 @@
               </div>
               <p>${item.desc}</p>
               <div class="place-note">${item.note}</div>
+              <div class="link-row">
+                <a class="place-link" href="${item.googleMapsUrl}" target="_blank" rel="noopener noreferrer">看地图</a>
+                <a class="place-link" href="${item.googleReviewsUrl}" target="_blank" rel="noopener noreferrer">看评价</a>
+              </div>
             </article>
           `).join('')}
         </div>
@@ -1372,5 +1416,6 @@
   </script>
 </body>
 </html>
+
 
 
