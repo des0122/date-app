@@ -48,14 +48,6 @@
       line-height: 1.05;
     }
 
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 760px;
-    }
-
     .grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
@@ -171,13 +163,6 @@
       border: 1px solid var(--line);
     }
 
-    .tiny {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
     .empty {
       text-align: center;
       padding: 36px 18px;
@@ -280,13 +265,6 @@
       background: #fff7fb;
     }
 
-    .footer-note {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 20px;
-    }
-
     @media (max-width: 820px) {
       .grid { grid-template-columns: 1fr; }
       .hero, .card { padding: 18px; }
@@ -302,6 +280,14 @@
     <div class="grid">
       <section class="card">
         <h2 class="section-title">先选今天的感觉</h2>
+
+        <div class="field">
+          <span class="label">地点</span>
+          <div class="chips" data-group="location">
+            <button type="button" class="chip active" data-value="any">都可以</button>
+            <button type="button" class="chip" data-value="Bayan Lepas">Bayan Lepas</button>
+          </div>
+        </div>
 
         <div class="field">
           <span class="label">预算</span>
@@ -364,6 +350,7 @@
 
   <script>
     const state = {
+      location: 'any',
       budget: 'any',
       duration: 'any',
       setting: 'any',
@@ -383,104 +370,6 @@
 
     const places = [
       {
-        title: 'Gurney Bay 吹风散步',
-        place: 'Gurney Bay',
-        area: 'Gurney',
-        price: 'low',
-        duration: 'short',
-        setting: 'mixed',
-        mood: 'chill',
-        tier: 'casual',
-        badge: '舒服',
-        meta: ['低预算', '吹风散步', '傍晚适合'],
-        desc: '适合那种只是想见面、不想把约会搞得太复杂的日子。走走、吹风、聊聊天，本身就很够了。',
-        note: '更适合傍晚，不然中午会比较晒。'
-      },
-      {
-        title: 'Armenian Street 老街拍照线',
-        place: 'Armenian Street 一带',
-        area: 'George Town',
-        price: 'low',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'photo',
-        tier: 'casual',
-        badge: '好拍',
-        meta: ['老街', '边走边拍', '很槟城'],
-        desc: '适合喜欢边走边看小店、墙画和街景的情侣。不会太贵，但画面感和约会感都不错。',
-        note: '可以很自然接咖啡、甜品或晚餐。'
-      },
-      {
-        title: 'Hin Bus Depot + 附近咖啡店',
-        place: 'Hin Bus Depot',
-        area: 'George Town',
-        price: 'low',
-        duration: 'short',
-        setting: 'mixed',
-        mood: 'photo',
-        tier: 'casual',
-        badge: '文青',
-        meta: ['拍照', '轻松', '好接下一站'],
-        desc: '很适合不想跑太远，又想让今天见面有一点内容。看展、拍照，再去附近找地方坐，很顺。',
-        note: '1 到 2 小时刚好，也适合临时起意。'
-      },
-      {
-        title: 'Chew Jetty + 小吃散步',
-        place: 'Chew Jetty 一带',
-        area: 'George Town',
-        price: 'low',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'food',
-        tier: 'casual',
-        badge: '边走边吃',
-        meta: ['低预算', '轻松', '有探索感'],
-        desc: '适合想要一点走走看看、顺便吃点东西的约会。不会太正式，但很容易成行。',
-        note: '半天路线比较刚好，之后还能接甜品。'
-      },
-      {
-        title: 'Batu Ferringhi 傍晚海边散步',
-        place: 'Batu Ferringhi',
-        area: 'Batu Ferringhi',
-        price: 'low',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        tier: 'casual',
-        badge: '浪漫',
-        meta: ['海边', '低预算', '傍晚加分'],
-        desc: '很适合那种不想花很多钱，但又想让今天看起来真的像约会的日子。海边自己会做气氛。',
-        note: '通常傍晚比白天舒服很多。'
-      },
-      {
-        title: 'Norm Micro Roastery 咖啡约会',
-        place: 'Norm Micro Roastery',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '咖啡',
-        meta: ['轻松坐', '适合聊天', '不太赶'],
-        desc: '适合不想跑景点，只想找一间有质感的地方坐下来好好聊天。很适合日常拍拖。',
-        note: '适合接老街散步或甜品第二站。'
-      },
-      {
-        title: 'Ceki 甜品 + George Town 走走',
-        place: 'Ceki',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'mixed',
-        mood: 'food',
-        tier: 'balanced',
-        badge: '甜甜的',
-        meta: ['甜品', '轻约会', '适合下午'],
-        desc: '想见面但又不想一次做太多事情的时候，甜品约会其实很够。坐一下，再附近散步，舒服又不累。',
-        note: '很适合下午时段。'
-      },
-      {
         title: 'Queensbay Mall 懒人稳阵约会',
         place: 'Queensbay Mall',
         area: 'Bayan Lepas',
@@ -495,779 +384,409 @@
         note: '很适合下雨天和临时约会。'
       },
       {
-        title: 'Gurney Plaza / Paragon 吃饭逛街组合',
-        place: 'Gurney Plaza / Gurney Paragon',
-        area: 'Gurney',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'food',
-        tier: 'balanced',
-        badge: '省脑',
-        meta: ['吃东西方便', '很容易成行', '日常拍拖'],
-        desc: '当你们懒得规划太多，但又想舒舒服服见个面，这种路线很实用。先吃，再慢慢逛，约会门槛低。',
-        note: '适合平日晚上或周末轻松型约会。'
-      },
-      {
-        title: 'Wonderfood Museum + 老街随走',
-        place: 'Wonderfood Museum',
-        area: 'George Town',
-        price: 'mid',
+        title: 'Bayan Baru Market Food Court 平价吃饱',
+        place: 'Bayan Baru Market Food Court',
+        area: 'Bayan Lepas',
+        price: 'low',
         duration: 'short',
         setting: 'mixed',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '有趣',
-        meta: ['不无聊', '适合拍照', '轻松'],
-        desc: '如果你们今天不想只是单纯吃饭，这种轻量景点很好用。不会太累，也更有记忆点。',
-        note: '可以搭配附近甜品或晚餐。'
+        mood: 'food',
+        tier: 'casual',
+        badge: '便宜多选择',
+        meta: ['food court', '本地感', '选择多'],
+        desc: '如果你们根本不是要什么高级约会，而是想便宜、轻松、稳稳吃一顿，这种地方反而最实用。',
+        note: '适合不知道吃什么的时候。'
       },
       {
-        title: 'Pinang Peranakan Mansion 文艺路线',
-        place: 'Pinang Peranakan Mansion',
-        area: 'George Town',
+        title: 'Super Tanker Food Centre 宵夜路线',
+        place: 'Super Tanker Food Centre',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'mixed',
+        mood: 'food',
+        tier: 'casual',
+        badge: '宵夜',
+        meta: ['平价', '吃很多种', '夜晚适合'],
+        desc: '很适合晚一点肚子饿、又不想花太多钱的时候。不是仪式感路线，但非常接地气。',
+        note: '适合平日晚餐或宵夜。'
+      },
+      {
+        title: 'Uncle Lanz Nasi Lemak 本地吃货约会',
+        place: 'Uncle Lanz Nasi Lemak',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'casual',
+        badge: 'nasi lemak',
+        meta: ['本地味', '便宜', '重口味满足'],
+        desc: '如果你们喜欢这种直接、好吃、够味的路线，这类本地餐比网红 cafe 更有真实生活感。',
+        note: '适合想认真吃东西，不想装文青的时候。'
+      },
+      {
+        title: 'Nasi 7 Benua 重口味午晚餐',
+        place: 'Nasi 7 Benua @ Koo Boo Cafe',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'casual',
+        badge: '很够味',
+        meta: ['本地饭', '便宜', '吃饱型'],
+        desc: '这种路线很适合两个人今天就是想吃饭，不想想太多。直接、满足，而且很有在地感。',
+        note: '适合午餐或晚餐。'
+      },
+      {
+        title: 'Hon Yun Kopitiam 日常见面吃一顿',
+        place: 'Hon Yun Kopitiam',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'casual',
+        badge: 'kopitiam',
+        meta: ['平价', '接地气', '不复杂'],
+        desc: '有时候最好的约会不是特别厉害，而是够轻松、够自然。这种 kopitiam 路线就是这种感觉。',
+        note: '适合工作后直接见面吃饭。'
+      },
+      {
+        title: 'Cargas Cafe 嘛嘛档轻松路线',
+        place: 'Cargas Cafe',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'chill',
+        tier: 'casual',
+        badge: 'mamak',
+        meta: ['便宜', '聊天', '没压力'],
+        desc: '嘛嘛档本来就很适合情侣日常见面。没有压力，不用打扮太多，坐下来就能聊很久。',
+        note: '适合晚一点、想轻松坐着的时候。'
+      },
+      {
+        title: 'Us Pizza 随性吃 pizza',
+        place: 'US Pizza',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'indoor',
-        mood: 'special',
+        mood: 'food',
         tier: 'balanced',
-        badge: '精致',
-        meta: ['有内容', '安静聊天', '比较特别'],
-        desc: '当你想让今天不只是随便见个面，这种地方就很有帮助。会多一点认真和完整的感觉。',
-        note: '很适合接咖啡或晚餐。'
+        badge: 'pizza',
+        meta: ['简单正餐', '不太贵', '两个人好分'],
+        desc: '想吃得舒服一点，但又不想太正式的时候，这种 casual 连锁反而很适合。',
+        note: '适合轻松晚餐。'
       },
       {
-        title: 'Penang Hill 半日认真约会',
-        place: 'Penang Hill / 升旗山',
-        area: 'Air Itam',
-        price: 'mid',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '经典',
-        meta: ['槟城代表', '半天', '比较认真'],
-        desc: '适合想让今天看起来像真正 outing 的时候。上山这件事本身就会让约会更有仪式感。',
-        note: '白天到傍晚比较适合，天气好会加很多分。'
-      },
-      {
-        title: 'Straits Quay 傍晚海边路线',
-        place: 'Straits Quay',
-        area: 'Tanjung Tokong',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '气氛',
-        meta: ['海边感', '散步', '适合晚一点'],
-        desc: '适合想让今天有一点约会气氛，但又不一定要花很多钱。散步、看海、再找地方坐，很顺。',
-        note: '傍晚到晚上会更有感觉。'
-      },
-      {
-        title: 'Oceano Symphony 海景约会晚餐',
-        place: 'Oceano Symphony',
-        area: 'Batu Ferringhi',
-        price: 'high',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'premium',
-        badge: '海景',
-        meta: ['海景气氛', '适合日落', '认真约会'],
-        desc: '如果你想把预算花在看得见升级感的地方，这种海景晚餐就很合理。气氛、画面和约会感都会比普通吃饭更到位。',
-        note: '比较适合傍晚到晚上，想要浪漫感时很吃香。'
-      },
-      {
-        title: 'Ferringhi Garden 认真晚餐',
-        place: 'Ferringhi Garden',
-        area: 'Batu Ferringhi',
-        price: 'high',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'food',
-        tier: 'premium',
-        badge: '认真吃',
-        meta: ['气氛餐厅', '比较正式', '适合庆祝'],
-        desc: '这类选择才比较符合高预算该有的感觉。不是单纯吃饱，而是整顿饭都会有今天有认真安排的味道。',
-        note: '适合纪念日、庆祝或想认真一点的晚上。'
-      },
-      {
-        title: 'Kebaya Dining Room 仪式感晚餐',
-        place: 'Kebaya Dining Room',
-        area: 'George Town',
+        title: 'Amaya Food Gallery 认真一点的约会餐',
+        place: 'Amaya Food Gallery at Amari SPICE Penang',
+        area: 'Bayan Lepas',
         price: 'high',
         duration: 'half',
         setting: 'indoor',
         mood: 'special',
         tier: 'premium',
-        badge: '仪式感',
-        meta: ['约会感强', '适合庆祝', '比较精致'],
-        desc: '如果你调高预算，是应该拿到这种等级的选择。更精致、更像 date night，也更适合留下深一点的印象。',
-        note: '适合想把普通见面升级成比较正式的约会。'
+        badge: '认真一点',
+        meta: ['酒店餐厅', '环境完整', '适合庆祝'],
+        desc: '如果在 Bayan Lepas 想认真一点约会，这类酒店系餐厅会比普通商场吃饭更有升级感。',
+        note: '适合纪念日或比较正式的晚上。'
       },
       {
-        title: 'Orinea Skyline Dinner',
-        place: 'Orinea by Farquhar Mansion',
-        area: 'George Town',
+        title: 'Kampachi 正式日料晚餐',
+        place: 'Kampachi, Hotel Equatorial Penang',
+        area: 'Bayan Lepas',
         price: 'high',
         duration: 'half',
         setting: 'indoor',
         mood: 'special',
-        tier: 'premium',
-        badge: '高级',
-        meta: ['夜景感', '高预算', '适合认真约会'],
-        desc: '这就是高预算该有的升级感：环境、视野、整体体验都会比普通晚餐更像 special occasion。',
-        note: '比较适合晚上，适合庆祝型约会。'
-      },
-      {
-        title: 'Peninsula House 复古感约会',
-        place: 'Peninsula House',
-        area: 'George Town',
-        price: 'high',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'special',
-        tier: 'premium',
-        badge: '复古',
-        meta: ['精致空间', '适合聊天', '比较特别'],
-        desc: '适合想要一点不同于普通 cafe 的环境感。复古空间会让这次见面看起来更像刻意安排过的约会。',
-        note: '比较适合下午到晚上，走轻仪式感路线。'
-      },
-      {
-        title: 'Indigo at The Blue Mansion date night',
-        place: 'Indigo at The Blue Mansion',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'premium',
-        badge: 'date night',
-        meta: ['气氛好', '正式一点', '比较值得'],
-        desc: '当你想让今晚吃饭变成今晚是约会，这种地方就会很有差别。高预算终于会带来明显升级。',
-        note: '适合纪念日、补过节或想认真一点的时候。'
-      },
-      {
-        title: 'Rossi Italian 正式意式晚餐',
-        place: 'Rossi Italian',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'premium',
-        badge: '意式',
-        meta: ['适合庆祝', '正式一点', '晚餐感强'],
-        desc: '如果想把约会重点放在好好吃一顿上，这种意式餐厅比普通商场餐更像真正的 date night。',
-        note: '适合纪念日、补过节，或单纯想认真吃一顿。'
-      },
-      {
-        title: 'Tsukiji Sushi Bar 日料约会',
-        place: 'Tsukiji Sushi Bar',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
         tier: 'premium',
         badge: '日料',
-        meta: ['认真吃', '服务感', '适合晚餐'],
-        desc: '给想吃得更精致一点的情侣。重点不是只是填饱，而是把整餐的感觉拉到比较正式的层级。',
-        note: '偏适合晚上，也适合你们今天想认真坐下来吃。'
+        meta: ['正式', '适合庆祝', '比较稳'],
+        desc: '想在这一区认真吃一顿，日料是很稳的方向。这类地方会让约会更像特地安排。',
+        note: '适合晚上，也适合庆祝。'
       },
       {
-        title: 'Jinju Korean Dining 韩式约会晚餐',
-        place: 'Jinju Korean Dining',
-        area: 'George Town',
+        title: 'Hai Boey Seafood 海鲜约会餐',
+        place: 'Hai Boey Seafood',
+        area: 'Bayan Lepas',
         price: 'mid',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'balanced',
-        badge: '韩式',
-        meta: ['适合吃货', '热闹一点', '有满足感'],
-        desc: '如果你们偏向吃东西导向的约会，这种韩式餐厅会比单纯喝咖啡更有主节目感，也比较容易吃得开心。',
-        note: '适合平日晚上或周末正餐约会。'
-      },
-      {
-        title: 'The TOP / Komtar 城市景观点',
-        place: 'The TOP at Komtar',
-        area: 'George Town',
-        price: 'high',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'premium',
-        badge: '视野',
-        meta: ['城市 view', '记忆点高', '拍照感强'],
-        desc: '适合想拍点不像平时逛街那样的照片，或者想让这次见面更有我们今天特地来一个地方的感觉。',
-        note: '比普通行程更有视觉记忆点。'
-      },
-      {
-        title: 'Eastern & Oriental 下午茶感约会',
-        place: 'Eastern & Oriental Hotel 一带',
-        area: 'George Town',
-        price: 'high',
-        duration: 'short',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'premium',
-        badge: '高级感',
-        meta: ['afternoon tea vibe', '适合庆祝', '比较优雅'],
-        desc: '高预算不一定只能是晚餐，也可以是更优雅、更慢一点的下午约会。整体气质会很不一样。',
-        note: '适合想轻一点但还是有仪式感的约会。'
-      },
-      {
-        title: 'BoraBora 日落海边晚餐',
-        place: 'BoraBora',
-        area: 'Batu Ferringhi',
-        price: 'high',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'premium',
-        badge: '日落',
-        meta: ['海边餐厅', '适合黄昏', 'chill 但浪漫'],
-        desc: '如果你们想一边看海一边吃饭，这种地方会很容易让普通见面变得更像约会。日落时段尤其有感觉。',
-        note: '傍晚去最加分，夜一点也有轻松气氛。'
-      },
-      {
-        title: 'Coco Nana 海边放空约会',
-        place: 'Coco Nana',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '放空',
-        meta: ['海边 chill', '适合黄昏', '画面感强'],
-        desc: '这类点适合不想太正式、但又想让今天有一点特别氛围。看海、吹风、慢慢坐着就够了。',
-        note: '比较适合下午到傍晚，节奏轻松。'
-      },
-      {
-        title: 'Ferringhi Heart 海边豆袋约会',
-        place: 'Ferringhi Heart',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '沙滩',
-        meta: ['豆袋座位', '看日落', '很有海边感'],
-        desc: '如果你们想要一种不用太精致，但看起来还是很像约会的行程，这种沙滩座位就很讨喜。',
-        note: '黄昏时段最值得，适合慢慢坐。'
-      },
-      {
-        title: 'Old Sense Beach Bar 海边夜景',
-        place: 'Old Sense Beach Bar',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '夜景',
-        meta: ['沙滩酒吧感', '傍晚好看', '比较有气氛'],
-        desc: '适合想找一种比普通餐厅更松弛的约会气氛。傍晚到夜里的画面感会比白天好很多。',
-        note: '更适合晚一点，海边灯光会加分。'
-      },
-      {
-        title: 'Natsu Bar & Dining 日系海边晚餐',
-        place: 'Natsu Bar & Dining',
-        area: 'Batu Ferringhi',
-        price: 'high',
         duration: 'half',
         setting: 'mixed',
         mood: 'food',
-        tier: 'premium',
-        badge: '日系',
-        meta: ['海边用餐', '晚餐感强', '比较特别'],
-        desc: '如果想吃得认真一点，又不想是太常见的那种餐厅，这种日系海边路线会比较有新鲜感。',
-        note: '适合晚餐约会，也适合想换口味。'
-      },
-      {
-        title: 'Unknown Cafe & Bistro 文青约会餐',
-        place: 'Unknown Cafe & Bistro',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
         tier: 'balanced',
-        badge: '文青',
-        meta: ['拍照友好', '餐点完整', '不太无聊'],
-        desc: '适合想找一间环境感不错、食物也不只是随便的地方。既能拍一点，也能认真坐下来。',
-        note: '适合下午到晚上，轻松但不敷衍。'
+        badge: '海鲜',
+        meta: ['多人菜也可两人吃', '有点特别', '不日常'],
+        desc: '如果吃腻了普通 cafe 和商场餐，海鲜路线会让约会有一点换口味的感觉。',
+        note: '适合晚餐，比较像认真吃一顿。'
       },
       {
-        title: 'Mano Fine Dining 认真纪念日',
-        place: 'Mano Fine Dining',
-        area: 'George Town',
-        price: 'high',
+        title: 'Mansion Bistro 晚上认真吃饭',
+        place: 'Mansion Bistro',
+        area: 'Bayan Lepas',
+        price: 'mid',
         duration: 'half',
         setting: 'indoor',
         mood: 'special',
-        tier: 'premium',
-        badge: 'fine dining',
-        meta: ['纪念日', '高级体验', '很正式'],
-        desc: '如果今天是想认真庆祝，这类 fine dining 才是真的高预算升级。环境、节奏和体验都很完整。',
-        note: '适合纪念日、生日或想把约会拉满的时候。'
-      },
-      {
-        title: 'Lumiere Restaurant 复古纪念日晚餐',
-        place: 'Lumiere Restaurant',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'special',
-        tier: 'premium',
-        badge: '复古',
-        meta: ['老宅氛围', '适合庆祝', '有惊喜感'],
-        desc: '这种带一点历史感的空间，很适合想让今天不要像普通吃饭。整体更有纪念日的重量。',
-        note: '适合晚上，也适合想找特别一点环境。'
-      },
-      {
-        title: 'Soul Restaurant & Bar 氛围感晚餐',
-        place: 'Soul Restaurant & Bar',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'premium',
-        badge: '气氛',
-        meta: ['西餐感', '适合聊天', '环境完整'],
-        desc: '适合想找一间既有氛围、又不会太生硬的正式餐厅。属于认真但不会太紧绷的路线。',
-        note: '适合平日晚上或周末 date night。'
-      },
-      {
-        title: 'Beach St Bistrot 欧陆晚餐约会',
-        place: 'Beach St Bistrot',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'premium',
-        badge: '欧陆',
-        meta: ['正式餐厅', '小庆祝', '稳定发挥'],
-        desc: '如果你们想吃一顿比较稳、环境又够像约会的晚餐，这种欧陆风路线很实用。',
-        note: '适合高预算但不想踩太奇怪风格。'
-      },
-      {
-        title: 'The Yardhouse Kitchen & Bar 文青正餐',
-        place: 'The Yardhouse Kitchen & Bar',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'food',
         tier: 'balanced',
-        badge: '文青餐',
-        meta: ['环境感好', '适合聊天', 'George Town'],
-        desc: '想找一间比普通 cafe 更完整、但又不用高预算的地方，这种店很适合日常认真约会。',
-        note: '适合午餐、下午或轻晚餐。'
+        badge: 'bistro',
+        meta: ['比较有气氛', '晚餐', '约会感'],
+        desc: '如果你们不想太高级，但还是想有一点 date night 味道，这种 bistro 很刚好。',
+        note: '适合平日晚上或周末。'
       },
       {
-        title: 'China House 老宅 cafe 约会',
-        place: 'China House',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '经典 cafe',
-        meta: ['老宅感', '适合拍照', '甜点也强'],
-        desc: '这是很适合第一次约会或想稳稳见面的选择。空间有特色，也不容易太无聊。',
-        note: '适合下午，接甜点或散步都很顺。'
-      },
-      {
-        title: 'Narrow Marrow 复古小店约会',
-        place: 'Narrow Marrow',
-        area: 'George Town',
+        title: 'St. Presso Coffee 咖啡聊天约会',
+        place: 'St. Presso Coffee',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'indoor',
         mood: 'chill',
         tier: 'balanced',
-        badge: '复古咖啡',
-        meta: ['环境特别', '适合聊天', '文青感'],
-        desc: '适合喜欢小空间、有设计感又不太商业的约会。会比较像你真的有挑过地方。',
-        note: '很适合白天或下雨天。'
+        badge: '咖啡',
+        meta: ['轻松坐', '适合聊天', '下午好用'],
+        desc: '适合不想跑太多地方，只想找一间舒服店慢慢坐着聊天。',
+        note: '下午约会会很顺。'
       },
       {
-        title: 'The Nook Books and Coffee 安静约会',
-        place: 'The Nook Books and Coffee',
-        area: 'George Town',
+        title: 'Coffeeric 轻松 cafe 约会',
+        place: 'Coffeeric',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'chill',
+        tier: 'balanced',
+        badge: 'cafe',
+        meta: ['不赶', '可聊天', '日常拍拖'],
+        desc: '这种就是很典型的日常拍拖点。没有太大压力，但又比随便找店来得有感觉。',
+        note: '适合白天或下午。'
+      },
+      {
+        title: 'Arang Coffee 安静坐一下',
+        place: 'Arang Coffee',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'indoor',
         mood: 'chill',
         tier: 'balanced',
         badge: '安静',
-        meta: ['书店感', '低压约会', '适合聊天'],
-        desc: '如果今天想见面，但不想太热闹，这种安静空间会很舒服。很适合慢慢聊。',
-        note: '适合白天或雨天，也适合第一次约会。'
+        meta: ['低压', '适合聊天', '轻约会'],
+        desc: '适合今天状态比较安静、想慢一点的约会。不是大节目，但会很舒服。',
+        note: '适合白天、雨天或工作后。'
       },
       {
-        title: 'Bodo Boardgame Cafe 室内玩乐约会',
-        place: 'Bodo Boardgame Cafe',
-        area: 'George Town',
+        title: '2F+ Coffee Roastery 咖啡控路线',
+        place: '2F+ Coffee Roastery',
+        area: 'Bayan Lepas',
         price: 'mid',
-        duration: 'half',
+        duration: 'short',
         setting: 'indoor',
         mood: 'chill',
         tier: 'balanced',
-        badge: '桌游',
-        meta: ['室内互动', '不会尴尬', '下雨好用'],
-        desc: '如果只是坐着喝咖啡会太干，这种桌游路线就很有用。会让约会更有互动感。',
-        note: '适合雨天、第一次约会或想找点事情做。'
+        badge: 'coffee',
+        meta: ['咖啡香', '适合白天', '小质感'],
+        desc: '如果你们本来就喜欢喝咖啡，这种地方会比一般见面点更有共同兴趣的感觉。',
+        note: '适合下午。'
       },
       {
-        title: 'Moo Moo Dessert 甜品短约会',
-        place: 'Moo Moo Dessert',
-        area: 'George Town',
+        title: 'Frank Laurent Coffee Roasters 慢慢喝咖啡',
+        place: 'Frank Laurent Coffee Roasters',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'chill',
+        tier: 'balanced',
+        badge: 'roastery',
+        meta: ['适合聊天', '白天路线', '不复杂'],
+        desc: '想找一个不夸张、但又有点 quality 的地方坐一下，这种 roastery 很合适。',
+        note: '适合午后。'
+      },
+      {
+        title: 'Auntie May Nyonya Kopitiam 娘惹风日常餐',
+        place: 'Auntie May Nyonya Kopitiam',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'indoor',
         mood: 'food',
         tier: 'balanced',
-        badge: '甜品',
-        meta: ['轻约会', '适合下午', '治愈感'],
-        desc: '不是每次见面都需要正餐。甜品这种短约会，反而很适合临时见面或饭后续摊。',
-        note: '适合下午或晚餐后第二站。'
+        badge: '娘惹',
+        meta: ['kopitiam 升级版', '本地味', '不无聊'],
+        desc: '如果不想太便宜随便，但又不想直接高级餐，这种带一点主题感的本地餐很刚好。',
+        note: '适合午餐或轻晚餐。'
       },
       {
-        title: 'Buu Buu Dessert Club 甜品店约会',
-        place: 'Buu Buu Dessert Club',
-        area: 'George Town',
+        title: 'Xuan Feng Restaurant 家常中餐路线',
+        place: 'Xuan Feng Restaurant',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'indoor',
         mood: 'food',
         tier: 'balanced',
-        badge: '甜点控',
-        meta: ['适合拍照', '轻松不累', '短时长'],
-        desc: '很适合那种不想吃太撑，但又想认真见一面的日子。甜品店会让约会变得轻巧很多。',
-        note: '适合下午茶或饭后。'
+        badge: '中餐',
+        meta: ['吃饱型', '适合分享', '稳阵'],
+        desc: '如果你们想认真吃饭但不走西餐路线，中餐其实是很稳的约会方向。',
+        note: '适合午餐晚餐。'
       },
       {
-        title: 'Hema Hema Gelato 轻甜散步约会',
-        place: 'Hema Hema',
-        area: 'George Town',
+        title: 'Blue Reef 轻松正餐约会',
+        place: 'Blue Reef',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'balanced',
+        badge: '正餐',
+        meta: ['不太贵', '适合两人', '轻松'],
+        desc: '适合那种没有要很隆重，但还是想选一间比 food court 更有点感觉的地方。',
+        note: '适合平日晚餐。'
+      },
+      {
+        title: 'KO.BQ 韩式烤肉路线',
+        place: 'KO.BQ Restaurant',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'half',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'balanced',
+        badge: '韩式',
+        meta: ['烤肉', '互动感', '吃得开心'],
+        desc: '韩式烤肉很适合把吃饭本身变成主节目。适合你们今天想吃得开心一点。',
+        note: '适合晚上。'
+      },
+      {
+        title: 'Beyond Veggie 清爽系约会餐',
+        place: 'Beyond Veggie by Secret Recipe',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'balanced',
+        badge: '清爽',
+        meta: ['素食友好', '轻一点', '舒服'],
+        desc: '如果今天不想吃得太重，这种清爽路线反而会让人状态更轻。',
+        note: '适合午餐或早晚餐。'
+      },
+      {
+        title: 'The One Noodles 平价面食约会',
+        place: 'The One Noodles',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'casual',
+        badge: '面食',
+        meta: ['平价', '快吃快满足', '简单见面'],
+        desc: '这种店很适合临时见面。预算低、门槛低、吃完还可以再接下一站。',
+        note: '适合简单见面。'
+      },
+      {
+        title: 'Alamak Kopitiam Batu Maung 轻松本地餐',
+        place: 'Alamak Kopitiam Batu Maung',
+        area: 'Bayan Lepas',
+        price: 'low',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'food',
+        tier: 'casual',
+        badge: '本地餐',
+        meta: ['kopitiam', '便宜', '稳阵'],
+        desc: '很适合那种不想想太多、但还是想吃得舒服一点的约会。',
+        note: '适合午餐晚餐。'
+      },
+      {
+        title: 'SPICE 一带 cafe route',
+        place: 'SPICE 一带',
+        area: 'Bayan Lepas',
+        price: 'mid',
+        duration: 'short',
+        setting: 'indoor',
+        mood: 'chill',
+        tier: 'balanced',
+        badge: '区域路线',
+        meta: ['看活动后可接', '轻松', '弹性高'],
+        desc: '有时候不一定要锁死某一家店，先去这一带，再临场选一间，也是一种很实用的约会方式。',
+        note: '适合临时决定。'
+      },
+      {
+        title: 'Bukit Jambul 一带便宜吃饭',
+        place: 'Bukit Jambul 一带',
+        area: 'Bayan Lepas',
         price: 'low',
         duration: 'short',
         setting: 'mixed',
         mood: 'food',
         tier: 'casual',
-        badge: 'gelato',
-        meta: ['低预算', '轻松', '适合边走边吃'],
-        desc: '想简单见面、不要太正式的时候，这种 gelato 路线很讨喜。花费不高，但心情会很好。',
-        note: '很适合老街散步中途加进去。'
+        badge: '便宜区',
+        meta: ['实用', '平价', '很多选择'],
+        desc: '如果你们要的是便宜又多选择，这种区域型路线非常实用，而且比硬推名店更贴近真实生活。',
+        note: '适合学生、平日、月底。'
       },
       {
-        title: 'Cheong Fatt Tze 蓝屋文艺约会',
-        place: 'Cheong Fatt Tze Mansion',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '文艺',
-        meta: ['很槟城', '拍照感强', '比较特别'],
-        desc: '如果想让今天更像 outing 而不是普通见面，这种文化空间会很有帮助，也很有记忆点。',
-        note: '适合白天，天气好时更出片。'
-      },
-      {
-        title: 'Penang River Cruise 河边散心',
-        place: 'Penang River Cruise',
-        area: 'Balik Pulau',
-        price: 'mid',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '小 outing',
-        meta: ['周末路线', '自然感', '不太常规'],
-        desc: '如果你们最近有点腻了，这种离开市区、换个节奏的路线很适合。比单纯吃饭更有新鲜感。',
-        note: '适合周末白天，比较像半日小旅行。'
-      },
-      {
-        title: 'Balik Pulau ATV 周末刺激路线',
-        place: 'Balik Pulau ATV',
-        area: 'Balik Pulau',
-        price: 'high',
-        duration: 'half',
-        setting: 'outdoor',
-        mood: 'special',
-        tier: 'premium',
-        badge: '刺激',
-        meta: ['活动型约会', '周末好用', '很不一样'],
-        desc: '如果你们已经吃饭拍照拍到有点腻，这种活动型约会会更有惊喜，也更容易留下记忆点。',
-        note: '适合周末白天，记得穿轻便一点。'
-      },
-      {
-        title: 'Flame Restaurant 夜景晚餐',
-        place: 'Flame Restaurant',
-        area: 'Air Itam',
-        price: 'high',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'premium',
-        badge: '夜景',
-        meta: ['城市景观', '适合傍晚', '比较浪漫'],
-        desc: '如果你们想找那种一坐下就有夜景加成的地方，这类餐厅很适合。重点不只是吃饭，而是整顿晚餐会更有画面。',
-        note: '傍晚到晚上最值得，靠窗或高处位更有感觉。'
-      },
-      {
-        title: 'The Top 68 高空夜景约会',
-        place: 'The Top 68',
-        area: 'George Town',
-        price: 'high',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'premium',
-        badge: '高空',
-        meta: ['高楼 view', '夜景强', '适合拍照'],
-        desc: '如果想看槟城夜景，这种高空视角很有用。会比普通商场见面更像你们今天特地安排了一个点。',
-        note: '晚上特别加分，也适合想拍一点不一样的照片。'
-      },
-      {
-        title: 'LUNA Sky Cafe 夜景 chill',
-        place: 'LUNA Sky Cafe',
-        area: 'George Town',
+        title: 'Summerton 吃饭散步轻约会',
+        place: 'Summerton',
+        area: 'Bayan Lepas',
         price: 'mid',
         duration: 'short',
         setting: 'mixed',
         mood: 'chill',
         tier: 'balanced',
-        badge: 'sky cafe',
-        meta: ['夜景', '轻松坐', '拍照友好'],
-        desc: '如果你们想找一个不用太正式、但还是有夜景加成的地方，这种 sky cafe 会很讨喜。',
-        note: '适合晚上，也适合约会后段再去坐一下。'
+        badge: '轻松',
+        meta: ['可吃可走', '低压力', '晚一点也行'],
+        desc: '这种地方的好处就是不需要太认真规划，但整体感觉又不会太随便。',
+        note: '适合傍晚或晚餐后。'
       },
       {
-        title: 'Cloud Eight Avenue 玻璃屋夜景',
-        place: 'Cloud Eight Avenue',
-        area: 'George Town',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'special',
-        tier: 'premium',
-        badge: '夜景 glasshouse',
-        meta: ['夜景餐厅', '很出片', '约会感强'],
-        desc: '如果今天想认真一点，这种能看夜景、又有完整环境感的地方很容易把氛围拉起来。',
-        note: '适合纪念日、庆祝或想留下深一点印象的时候。'
-      },
-      {
-        title: 'Gin Library 隐藏版夜晚约会',
-        place: 'Gin Library',
-        area: 'George Town',
-        price: 'high',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'special',
-        tier: 'premium',
-        badge: '隐藏版',
-        meta: ['小众感', '适合聊天', '夜晚氛围'],
-        desc: '适合不想走太大众路线、想找一点小众夜晚氛围的情侣。会比较像真的有认真挑地方。',
-        note: '适合晚餐后第二站，或者想轻松小酌聊天。'
-      },
-      {
-        title: 'OLO Studio 可爱拍照约会',
-        place: 'OLO Studio',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '可爱',
-        meta: ['好拍', '轻松', '约会不无聊'],
-        desc: '适合想找一点轻松、可爱、带一点拍照感的行程。不是正餐主导，但会让约会更有内容。',
-        note: '适合下午，接 cafe 或甜品都很顺。'
-      },
-      {
-        title: 'Jetty 35 茶屋 文青拍拖点',
-        place: 'Jetty 35 茶屋',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '茶屋',
-        meta: ['文青感', '空间特别', '适合拍照'],
-        desc: '如果你们喜欢老屋、木质感、慢慢坐的地方，这种茶屋会让见面更有被安排过的感觉。',
-        note: '适合白天，也适合搭配老街路线。'
-      },
-      {
-        title: 'Hana Film Penang 复古底片感约会',
-        place: 'Hana Film Penang',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '底片感',
-        meta: ['复古', '小众', '很有记忆点'],
-        desc: '这类点很适合喜欢一点复古审美、又不想只是普通喝咖啡的情侣。画面和记忆点都比较强。',
-        note: '适合白天，也适合文青路线。'
-      },
-      {
-        title: 'Gemu Cafe 下雨天可爱约会',
-        place: 'Gemu Cafe',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '可爱室内',
-        meta: ['雨天好用', '轻松', '不会太闷'],
-        desc: '下雨天如果不想只去 mall，这种可爱又轻松的室内点会很好用。简单见面也能有点情绪。',
-        note: '适合下午或雨天，轻松不累。'
-      },
-      {
-        title: 'Kohii Board Game Cafe 雨天桌游约会',
-        place: 'Kohii Board Game Cafe',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '桌游室内',
-        meta: ['互动感', '下雨备选', '不怕尴尬'],
-        desc: '如果下雨又不想只是坐着看手机，这种桌游咖啡厅会让约会更有参与感，也比较不会干。',
-        note: '适合雨天、第一次约会或想找点事一起做。'
-      },
-      {
-        title: 'Pado Fantasyland 室内梦幻路线',
-        place: 'Pado Fantasyland',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '梦幻',
-        meta: ['室内拍照', '有趣', '不太普通'],
-        desc: '适合想找一点不太一样的室内路线。比起普通 cafe，这种地方会更像今天有特别安排。',
-        note: '适合白天或下雨天，拍照向很强。'
-      },
-      {
-        title: 'Journal Georgetown 安静雨天约会',
-        place: 'Journal Georgetown',
-        area: 'George Town',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '安静室内',
-        meta: ['雨天适合', '慢慢聊', '舒服'],
-        desc: '如果今天只是想找个舒服空间躲雨、慢慢聊天，这类店会比热闹餐厅更适合。',
-        note: '适合白天，也适合临时见面。'
-      },
-      {
-        title: 'Lebanon Restaurant 地中海晚餐',
-        place: 'Lebanon Restaurant',
-        area: 'Batu Ferringhi',
-        price: 'high',
-        duration: 'half',
-        setting: 'indoor',
-        mood: 'food',
-        tier: 'premium',
-        badge: '异国风',
-        meta: ['Batu Ferringhi', '适合正餐', '比较少见'],
-        desc: '如果你们想吃一点不同于常见西餐或日料的东西，这种异国风正餐会比较有新鲜感。',
-        note: '适合晚餐，也适合想换口味的时候。'
-      },
-      {
-        title: 'Summer Sea Cafe 日落海边感',
-        place: 'Summer Sea Cafe',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'special',
-        tier: 'balanced',
-        badge: '日落海边',
-        meta: ['海边 view', '黄昏好看', '轻松浪漫'],
-        desc: '适合想在海边放空、顺便吃点东西的约会。没有太重压力，但画面会很好看。',
-        note: '傍晚最值得，日落前去更加分。'
-      },
-      {
-        title: 'Biru Biru On The Island 轻松吃饭看海',
-        place: 'Biru Biru On The Island',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'half',
-        setting: 'mixed',
-        mood: 'food',
-        tier: 'balanced',
-        badge: '海边吃饭',
-        meta: ['轻松', '海边感', '不太正式'],
-        desc: '适合那种想在海边认真吃一顿、但又不想太正式的日子。会比普通商场餐更有度假感。',
-        note: '适合傍晚到晚上，节奏轻松。'
-      },
-      {
-        title: 'Ferringhi Coffee Garden 海边咖啡约会',
-        place: 'Ferringhi Coffee Garden',
-        area: 'Batu Ferringhi',
-        price: 'mid',
-        duration: 'short',
-        setting: 'indoor',
-        mood: 'chill',
-        tier: 'balanced',
-        badge: '海边咖啡',
-        meta: ['咖啡店', '适合白天', 'Batu Ferringhi'],
-        desc: '如果不想直接上正餐，这种咖啡店路线很适合先见面、先坐一下，再决定后面要不要继续走。',
-        note: '适合白天或下午，轻松型约会很好用。'
-      },
-      {
-        title: 'Madam Kwan’s Gurney 稳阵约会餐',
-        place: 'Madam Kwan’s',
-        area: 'Gurney',
-        price: 'mid',
+        title: 'Bayan Point / Bayan Baru kopitiam cluster',
+        place: 'Bayan Point / Bayan Baru 一带',
+        area: 'Bayan Lepas',
+        price: 'low',
         duration: 'short',
         setting: 'indoor',
         mood: 'food',
-        tier: 'balanced',
-        badge: '稳阵正餐',
-        meta: ['Gurney', '方便', '不容易出错'],
-        desc: '如果你们人在 Gurney，又想找一个稳稳吃饭聊天的地方，这类餐厅就很实用。',
-        note: '适合平日晚上、周末或临时起意见面。'
+        tier: 'casual',
+        badge: '很多选择',
+        meta: ['kopitiam', '平价', '区域型'],
+        desc: '当你们只是要见一面、吃个饭、聊一下，区域型 kopitiam 选择比单点推荐更好用。',
+        note: '适合不知道吃什么的时候。'
       },
       {
-        title: 'De’8000 Gurney 轻松互动约会',
-        place: 'De’8000',
-        area: 'Gurney',
-        price: 'mid',
+        title: 'Factory Area 晚餐宵夜线',
+        place: 'Bayan Lepas Industrial Area',
+        area: 'Bayan Lepas',
+        price: 'low',
         duration: 'short',
-        setting: 'indoor',
-        mood: 'photo',
-        tier: 'balanced',
-        badge: '互动',
-        meta: ['Gurney', '有趣', '不太无聊'],
-        desc: '如果只是吃饭太单调，这种比较有小互动、小玩味的地方会让见面轻松很多。',
-        note: '适合下午或晚上，偏轻松路线。'
+        setting: 'mixed',
+        mood: 'food',
+        tier: 'casual',
+        badge: '夜晚好用',
+        meta: ['工厂区', '宵夜', '便宜'],
+        desc: '这类路线超适合上班后约会。不是浪漫型，但非常真实、方便、而且预算友好。',
+        note: '适合下班后见面。'
       }
     ];
 
     function scorePlace(place) {
       let score = 0;
+
+      if (state.location === 'any') {
+        score += 1;
+      } else if (place.area === state.location) {
+        score += 7;
+      } else {
+        score -= 8;
+      }
 
       if (state.budget === 'any') {
         score += 1;
@@ -1400,6 +919,7 @@
     document.getElementById('shuffleBtn').addEventListener('click', renderResults);
 
     document.getElementById('resetBtn').addEventListener('click', () => {
+      state.location = 'any';
       state.budget = 'any';
       state.duration = 'any';
       state.setting = 'any';
